@@ -35,4 +35,6 @@ Use merge commits for promotion so the long-lived branches retain common ancestr
 
 The GitHub Action runs the policy from the trusted base commit for pull requests and does not execute the proposed application code or use administrative secrets. It validates the branch flow, not application quality or permission to deploy. The pure policy has local regression tests under `tests/branch-policy.test.mjs`.
 
+The action also supports a manual check from GitHub Actions. Future hosting must explicitly select `main` as its production branch; GitHub's `dev-bola` default is for development.
+
 Read back the live settings in [GitHub rulesets](https://github.com/bolablg/iyanju/settings/rules). Declarative policy snapshots are retained in `.github/rulesets/`; do not assume editing a JSON file updates GitHub. Remote rule changes need an explicit administrative application and verification.

@@ -1,6 +1,7 @@
 name: Branch policy
 
 on:
+  workflow_dispatch:
   push:
     branches: ["dev-*", staging, main]
   pull_request_target:
