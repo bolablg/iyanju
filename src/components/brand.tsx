@@ -2,12 +2,18 @@ export function Symbol({ className = "" }: { className?: string }) {
   return (
     <svg
       className={className}
-      viewBox="0 0 64 64"
+      viewBox="0 0 16 16"
       fill="none"
       aria-hidden="true"
     >
-      <path d="M8 53V36h17V19h17V7h14v29H39v17H8Z" fill="currentColor" />
-      <path d="M8 7h17v12H8z" fill="currentColor" />
+      <rect
+        x="1"
+        y="1"
+        width="14"
+        height="14"
+        fill="currentColor"
+        stroke="#18181b"
+      />
     </svg>
   );
 }
@@ -15,9 +21,7 @@ export function Wordmark() {
   return (
     <span className="wordmark" translate="no">
       <Symbol />
-      <span>
-        iYanJu<span className="wordmark-dot">.</span>
-      </span>
+      <span>iyanju</span>
     </span>
   );
 }

@@ -6,22 +6,13 @@ import { site, emailLink } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
   "Get in touch",
-  "Questions, feedback, or a problem worth solving? Contact Bolaji BALOGOUN, the creator and operator of iYanJu.",
+  "Questions, feedback, or a problem worth solving? Get in touch.",
   "/contact",
 );
 export default function Contact() {
   return (
     <>
-      <PageIntro
-        eyebrow="A DIRECT LINE"
-        title={
-          <>
-            Good things start
-            <br />
-            with <em>a conversation.</em>
-          </>
-        }
-      >
+      <PageIntro eyebrow="A DIRECT LINE" title="Let’s talk.">
         <p>
           A question about a tool, a thoughtful bit of feedback, or a problem
           worth solving. I’d like to hear it.
@@ -29,8 +20,8 @@ export default function Contact() {
       </PageIntro>
       <section className="container contact-grid">
         <div className="contact-email">
-          <Eyebrow>WRITE TO BOLAJI</Eyebrow>
-          <a className="email-address" href={emailLink("Hello iYanJu")}>
+          <Eyebrow>GET IN TOUCH</Eyebrow>
+          <a className="email-address" href={emailLink("Hello iyanju")}>
             {site.operator.email}
             <Arrow diagonal />
           </a>
@@ -46,9 +37,7 @@ export default function Contact() {
             <p>
               {site.operator.name}
               <br />
-              Creator & operator of iYanJu
-              <br />
-              {site.operator.location}
+              {site.operator.address}
             </p>
           </div>
           <div>
@@ -58,7 +47,7 @@ export default function Contact() {
               leave out passwords, access tokens, and private workspace content.
             </p>
             <Link href="/privacy" className="text-link">
-              Read the privacy draft <Arrow />
+              Read the privacy notice <Arrow />
             </Link>
           </div>
         </div>

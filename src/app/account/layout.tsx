@@ -11,6 +11,7 @@ export default function AccountLayout({
   if (!config.enabled) return children;
   return (
     <ClerkProvider
+      telemetry={false}
       publishableKey={config.publishableKey}
       signInUrl="/account"
       signUpUrl="/account/sign-up"
@@ -18,12 +19,13 @@ export default function AccountLayout({
       signUpFallbackRedirectUrl="/account"
       appearance={{
         variables: {
-          colorPrimary: "#bc3e2b",
+          colorPrimary: "#18181b",
           fontFamily: "var(--font-sans), sans-serif",
           borderRadius: "0",
         },
         elements: {
-          card: { boxShadow: "none", border: "1px solid #d8d9cf" },
+          card: { boxShadow: "none", border: "2px solid #18181b" },
+          cardBox: { boxShadow: "none", maxWidth: "100%" },
           formButtonPrimary: { boxShadow: "none" },
         },
       }}

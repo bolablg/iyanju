@@ -1,6 +1,7 @@
 {
   "name": "iyanju",
   "version": "0.1.0",
+  "description": "Personal projects and practical tools, built with curiosity, care, and assistance from AI.",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,7 +12,7 @@
     "lint": "eslint .",
     "test": "node --experimental-strip-types --test tests/*.test.ts tests/*.test.mjs",
     "test:e2e": ".venv/bin/python tests/browser.py",
-    "format:check": "prettier --check src tests/*.ts tests/*.mjs .github *.ts *.json *.mjs *.md docs/*.md"
+    "format:check": "prettier --check src tests/*.ts tests/*.mjs .github *.ts *.json *.mjs README.md CONTRIBUTING.md"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.0.0",

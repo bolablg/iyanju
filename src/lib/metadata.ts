@@ -4,7 +4,7 @@ export function pageMetadata(
   title: string,
   description: string,
   path: string,
-  draft = false,
+  noIndex = false,
 ): Metadata {
   return {
     title,
@@ -19,10 +19,10 @@ export function pageMetadata(
           url: "/opengraph-image",
           width: 1200,
           height: 630,
-          alt: "iYanJu — Good ideas. Put to work.",
+          alt: "iyanju — Good ideas. Put to work.",
         },
       ],
     },
-    ...(draft ? { robots: { index: false, follow: true } } : {}),
+    ...(noIndex ? { robots: { index: false, follow: true } } : {}),
   };
 }

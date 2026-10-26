@@ -23,7 +23,7 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="header-inner">
-        <Link href="/" aria-label="iYanJu home" onClick={close}>
+        <Link href="/" aria-label="iyanju home" onClick={close}>
           <Wordmark />
         </Link>
         <button
@@ -62,7 +62,7 @@ export function Header() {
             onClick={close}
             aria-current={path.startsWith("/account") ? "page" : undefined}
           >
-            Your account <Arrow diagonal />
+            Sign in <Arrow diagonal />
           </Link>
         </nav>
       </div>
