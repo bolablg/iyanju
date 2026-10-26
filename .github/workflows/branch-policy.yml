@@ -1,0 +1,41 @@
+name: Branch policy
+
+on:
+  push:
+    branches: ["dev-*", staging, main]
+  pull_request_target:
+    branches: ["dev-*", staging, main]
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  branch-policy:
+    name: branch-policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # On PRs, execute only trusted policy from the base SHA, never head code.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          persist-credentials: false
+          sparse-checkout: .github/scripts
+      - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        with:
+          script: |
+            const { isAllowedBranch, validatePromotion } = await import(`${process.env.GITHUB_WORKSPACE}/.github/scripts/branch-policy.mjs`);
+            const pr = context.payload.pull_request;
+            if (pr) {
+              validatePromotion({
+                base: pr.base.ref,
+                head: pr.head.ref,
+                sameRepository: pr.head.repo?.full_name === pr.base.repo.full_name,
+              });
+              core.info(`Allowed promotion: ${pr.head.ref} → ${pr.base.ref}`);
+            } else {
+              const branch = context.ref.replace(/^refs\/heads\//, '');
+              if (!isAllowedBranch(branch)) core.setFailed('Branches must be dev-*, staging, or main.');
+              else core.info(`Allowed branch: ${branch}`);
+            }

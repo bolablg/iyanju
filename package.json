@@ -1,0 +1,35 @@
+{
+  "name": "iyanju",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1 --port 3000",
+    "build": "next build",
+    "start": "next start --hostname 127.0.0.1 --port 3000",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "node --experimental-strip-types --test tests/*.test.ts tests/*.test.mjs",
+    "test:e2e": ".venv/bin/python tests/browser.py",
+    "format:check": "prettier --check src tests/*.ts tests/*.mjs .github *.ts *.json *.mjs *.md docs/*.md"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^7.0.0",
+    "next": "^16.4.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^16.4.3",
+    "prettier": "^3.9.10",
+    "typescript": "^5.9.0"
+  },
+  "engines": {
+    "node": ">=22.18.0 <26"
+  }
+}
