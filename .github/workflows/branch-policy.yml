@@ -14,7 +14,7 @@ on:
 permissions:
   contents: read
   pull-requests: read
-  checks: write
+  statuses: write
 
 jobs:
   validate-promotion:
@@ -66,16 +66,15 @@ jobs:
               conclusion = 'failure';
               summary = error.message;
             }
-            // Explicitly report the validated PR head, including for manual retries.
-            // Dispatch job checks themselves do not satisfy GitHub branch rules.
-            await github.rest.checks.create({
+            // A commit status records the actual validation result independently
+            // of the workflow trigger. Dispatch job checks are not PR checks.
+            await github.rest.repos.createCommitStatus({
               ...context.repo,
-              name: 'branch-policy',
-              head_sha: pr.head.sha,
-              status: 'completed',
-              conclusion,
-              details_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
-              output: { title: 'Staged release policy', summary },
+              context: 'branch-policy',
+              sha: pr.head.sha,
+              state: conclusion,
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              description: summary.slice(0, 140),
             });
             if (conclusion === 'failure') core.setFailed(summary);
             else core.info(summary);
