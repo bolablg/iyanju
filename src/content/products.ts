@@ -64,7 +64,7 @@ export type CollectionEntry = {
   name: string;
   description: string;
   category: string;
-  tone: "violet" | "mint" | "ink";
+  tone: "violet" | "mint" | "ink" | "orange";
   url: string | null;
   action: string;
   detailsUrl?: string;
@@ -100,5 +100,15 @@ export const collection: CollectionEntry[] = [
     tone: "ink",
     url: "https://github.com/bolablg/skills",
     action: "View repository",
+  },
+  {
+    slug: "wlan",
+    name: "Wlan",
+    description:
+      "A collaborative writing studio for articles, writing styles, and drafts. Access by invitation.",
+    category: "Writing studio",
+    tone: "orange",
+    url: "https://wlan.iyanju.com",
+    action: "Open Wlan",
   },
 ];

@@ -15,6 +15,7 @@ The Yoruba name carries a personal sense of encouragement and effort: taking an 
 | [Kazi](https://kazi.iyanju.com)                      | Work management for people, teams, and connected agents: tasks, projects, sprints, timelines, calendars, and planning. |
 | PlayKin                                              | A YouTube companion for playlist management and shared listening. Currently in development.                            |
 | [iyanju Agentory](https://github.com/bolablg/skills) | A collection of portable skills and integrations for AI assistants.                                                    |
+| [Wlan](https://wlan.iyanju.com)                      | A collaborative writing studio for articles, writing styles, and drafts. Access by invitation.                         |
 
 The collection grows around real applications rather than a fixed product category. Each application owns its service-specific data and permissions.
 
