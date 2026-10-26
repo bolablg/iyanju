@@ -5,7 +5,7 @@ import { site, emailLink } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
   "Website terms",
-  "Terms for using the iyanju website, its application catalogue, and contact information.",
+  "Terms for using the iYANJU website, its application catalogue, and contact information.",
   "/terms",
 );
 const sections: LegalSection[] = [
@@ -17,7 +17,7 @@ const sections: LegalSection[] = [
         {operatorClause}
         <p>
           These terms apply to the public catalogue and information at{" "}
-          {site.url}. iyanju is a personal project: a home for applications
+          {site.url}. iYANJU is a personal project: a home for applications
           built out of curiosity and a wish to make useful tools.
         </p>
       </>
@@ -42,7 +42,7 @@ const sections: LegalSection[] = [
       <>
         <p>
           Links take you to independently operated product experiences within
-          the iyanju collection. Each tool’s actual terms, privacy notice,
+          the iYANJU collection. Each tool’s actual terms, privacy notice,
           access rules, and features should be reviewed there. This catalogue
           does not grant workspace membership, product entitlements, or
           permission to access another person’s data.
@@ -62,7 +62,7 @@ const sections: LegalSection[] = [
     content: (
       <>
         <p>
-          The iyanju identity and website content identify this independent
+          The iYANJU identity and website content identify this independent
           initiative. Product names and assets belong to their respective
           owners. Linking to a tool or provider does not replace its own
           information or terms.
@@ -101,7 +101,7 @@ const sections: LegalSection[] = [
         </p>
         <p>
           For website questions, email{" "}
-          <a href={emailLink("iyanju website enquiry")}>
+          <a href={emailLink("iYANJU website enquiry")}>
             {site.operator.email}
           </a>
           .

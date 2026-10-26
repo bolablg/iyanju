@@ -143,12 +143,12 @@ main:focus {
   font-weight: 750;
   line-height: 1;
   letter-spacing: -0.06em;
-  text-transform: lowercase;
+  text-transform: none;
 }
-.wordmark > svg {
-  width: 13px;
-  height: 13px;
-  color: var(--accent);
+.wordmark > img {
+  display: block;
+  width: auto;
+  height: 24px;
 }
 .navigation {
   display: flex;
@@ -203,7 +203,7 @@ main:focus {
   flex-shrink: 0;
 }
 .brand-case {
-  text-transform: lowercase;
+  text-transform: none;
 }
 .button {
   display: inline-flex;

@@ -21,7 +21,7 @@ export default function Contact() {
       <section className="container contact-grid">
         <div className="contact-email">
           <Eyebrow>GET IN TOUCH</Eyebrow>
-          <a className="email-address" href={emailLink("Hello iyanju")}>
+          <a className="email-address" href={emailLink("Hello iYANJU")}>
             {site.operator.email}
             <Arrow diagonal />
           </a>

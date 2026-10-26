@@ -71,7 +71,7 @@ function SignedInControls() {
   return (
     <div className="account-panel">
       <UserButton />
-      <h2>You’re signed in to iyanju.</h2>
+      <h2>You’re signed in to iYANJU.</h2>
       <p>
         Your account is ready. Each application manages its own data,
         membership, and permissions. Existing application accounts are adopted

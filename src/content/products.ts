@@ -94,7 +94,7 @@ export const collection: CollectionEntry[] = [
   },
   {
     slug: "agentory",
-    name: "iyanju Agentory",
+    name: "iYANJU Agentory",
     description: "Portable skills and integrations for AI assistants.",
     category: "Open source",
     tone: "ink",

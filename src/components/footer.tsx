@@ -7,7 +7,7 @@ export function Footer() {
       <div className="container">
         <div className="footer-main">
           <div className="footer-brand">
-            <Link href="/" aria-label="iyanju home">
+            <Link href="/" aria-label="iYANJU home">
               <Wordmark />
             </Link>
             <p>
