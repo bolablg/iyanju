@@ -2,16 +2,15 @@ import { LegalDocument } from "@/components/legal-document";
 import { privacySections } from "@/content/privacy";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
-  "Privacy draft",
-  "How this website works, what belongs to each tool, and the privacy decisions still to be confirmed.",
+  "Privacy",
+  "How iyanju handles website visits, enquiries, accounts, and your privacy choices.",
   "/privacy",
-  true,
 );
 export default function Privacy() {
   return (
     <LegalDocument
       title="Privacy, in plain sight."
-      intro="A draft of the website’s privacy information. Each tool has its own notice for the information and connections it handles."
+      intro="How this website handles your information. Each tool has its own notice for the information and connections it handles."
       sections={privacySections}
     />
   );

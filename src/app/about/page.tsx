@@ -4,16 +4,19 @@ import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
   "The story",
-  "A note from Bolaji BALOGOUN on effort, encouragement, and building practical software with AI.",
+  "Why iyanju exists: personal projects, a love of technology, and learning by building with assistance from AI.",
   "/about",
 );
 export default function About() {
   return (
     <>
-      <PageIntro eyebrow="THE PERSON BEHIND iyanju" title="Hi, I’m Bolaji.">
+      <PageIntro
+        eyebrow="THE IDEA BEHIND iyanju"
+        title="Curiosity, put to work."
+      >
         <p>
-          I build software for things I want to make useful. iyanju is a home
-          for these projects and the people who use them.
+          A home for personal projects, built for the pleasure of learning and
+          making something useful.
         </p>
       </PageIntro>
       <section className="container about-grid">
@@ -21,9 +24,9 @@ export default function About() {
           <Eyebrow>WHY iyanju?</Eyebrow>
           <h2>An idea, then the effort.</h2>
           <p>
-            I created iyanju as a home for practical tools I build with
-            assistance from AI. It’s an independent project, and I’m the person
-            who creates and operates it.
+            My professional work is in data engineering, data analysis, and
+            statistics. iyanju is a separate home for a personal interest:
+            exploring technology and building applications I want to use.
           </p>
           <p>
             For me, the Yoruba name carries a personal sense of encouragement
@@ -31,10 +34,20 @@ export default function About() {
             toward something useful.
           </p>
           <p>
-            AI assists me in exploring possibilities, making decisions, and
-            writing code. I challenge its work on architecture, security, and
-            design, ask for improvements, and take responsibility for the
-            software I share.
+            Sometimes I want a tool that works my way. Before adding another
+            subscription, I explore whether I can build it. I enjoy learning how
+            software works, shaping a tool around a real need, and sharing it
+            for other people to try.
+          </p>
+          <p>
+            I build with assistance from AI. I direct the work, challenge its
+            proposals on decisions, architecture, security, and design, and ask
+            for improvements. I take responsibility for what I share.
+          </p>
+          <p>
+            For now, iyanju is a passion project. I’m here to learn, make useful
+            things, and let other people try them. Each application can find its
+            own direction as it matures.
           </p>
           <p className="signature">{site.operator.name}</p>
           <span className="small">
@@ -56,11 +69,11 @@ export default function About() {
       <section className="container about-principles">
         <Eyebrow>WHAT GUIDES THE WORK</Eyebrow>
         <div>
-          <h2>Useful before impressive.</h2>
+          <h2>Learn by building.</h2>
           <p>
-            Clear tools. Honest explanations. Deliberate connections. Software
-            should earn its place in your day by helping you do something that
-            matters.
+            Building an application is a way to understand how software works,
+            explore what AI can help me achieve, and turn curiosity into
+            something I can use and share.
           </p>
           <ButtonLink href="/tools">See what’s being built</ButtonLink>
         </div>

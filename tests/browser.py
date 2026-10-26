@@ -33,7 +33,7 @@ with sync_playwright() as p:
             expect(page.locator("main h1")).to_have_count(1)
             assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), ("overflow", width, route)
             assert "iyanju" in page.title()
-            if route in ["/privacy", "/terms", "/account", "/account/sign-up"]:
+            if route in ["/account", "/account/sign-up"]:
                 assert "noindex" in page.locator('meta[name="robots"]').get_attribute("content")
             elif "does-not-exist" not in route:
                 assert page.locator('link[rel="canonical"]').get_attribute("href") == "https://iyanju.com" + ("" if route == "/" else route)
@@ -106,7 +106,8 @@ with sync_playwright() as p:
 
     sitemap = context.request.get(BASE + "/sitemap.xml").text()
     assert "https://iyanju.com/tools/kazi" in sitemap
-    assert all(path not in sitemap for path in ["/privacy", "/terms", "/account"])
+    assert all("https://iyanju.com" + path in sitemap for path in ["/privacy", "/terms"])
+    assert "/account" not in sitemap
     response = context.request.get(BASE + "/opengraph-image")
     assert response.status == 200 and response.headers["content-type"].startswith("image/png")
     # Server-rendered public content and product links survive without JavaScript.

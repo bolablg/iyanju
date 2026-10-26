@@ -8,13 +8,13 @@ export function StudioHome() {
   return (
     <>
       <section className="container studio-hero" aria-labelledby="home-heading">
-        <Eyebrow>Independent software</Eyebrow>
+        <Eyebrow>Personal projects</Eyebrow>
         <div className="studio-hero-layout">
           <div>
             <h1 id="home-heading">Make good things happen.</h1>
             <p>
-              Practical software for the things you want to get done. Created
-              with curiosity, care, and assistance from AI.
+              Practical software for the things you want to get done. Personal
+              projects, built with curiosity, care, and assistance from AI.
             </p>
           </div>
           <ButtonLink href="#applications" secondary>
@@ -34,7 +34,7 @@ export function StudioHome() {
               {String(collection.length).padStart(2, "0")} projects
             </span>
           </div>
-          <span>Independently built</span>
+          <span>Built from curiosity</span>
         </div>
         <ApplicationGrid />
       </section>
@@ -47,10 +47,9 @@ export function StudioHome() {
           the effort, and make something useful.”
         </blockquote>
         <p>
-          I build with assistance from AI. I challenge its proposals on
-          decisions, architecture, security, and design, and ask it to improve
-          the work. iyanju is a home for the applications that come from that
-          process.
+          These projects start with something I want to use, a chance to learn,
+          or an idea I want to try. I build with assistance from AI, challenge
+          its proposals, and share what takes shape for others to try.
         </p>
         <Link className="maker-signature text-link" href="/about">
           More about iyanju <Arrow />

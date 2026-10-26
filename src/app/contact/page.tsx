@@ -39,7 +39,7 @@ export default function Contact() {
               <br />
               Creator & operator of iyanju
               <br />
-              {site.operator.location}
+              {site.operator.address}
             </p>
           </div>
           <div>
@@ -49,7 +49,7 @@ export default function Contact() {
               leave out passwords, access tokens, and private workspace content.
             </p>
             <Link href="/privacy" className="text-link">
-              Read the privacy draft <Arrow />
+              Read the privacy notice <Arrow />
             </Link>
           </div>
         </div>

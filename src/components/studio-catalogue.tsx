@@ -7,8 +7,8 @@ export function StudioCatalogue() {
     <>
       <PageIntro eyebrow="The collection" title="Different projects. One home.">
         <p>
-          Applications created around real ideas. Each has its own purpose,
-          data, and permissions.
+          Applications that grew from an idea or a personal need. Each has its
+          own purpose, data, and permissions.
         </p>
       </PageIntro>
       <section
@@ -22,7 +22,7 @@ export function StudioCatalogue() {
               {String(collection.length).padStart(2, "0")}
             </span>
           </div>
-          <span>Independently built</span>
+          <span>Built from curiosity</span>
         </div>
         <ApplicationGrid />
       </section>

@@ -4,7 +4,7 @@ export function pageMetadata(
   title: string,
   description: string,
   path: string,
-  draft = false,
+  noIndex = false,
 ): Metadata {
   return {
     title,
@@ -23,6 +23,6 @@ export function pageMetadata(
         },
       ],
     },
-    ...(draft ? { robots: { index: false, follow: true } } : {}),
+    ...(noIndex ? { robots: { index: false, follow: true } } : {}),
   };
 }

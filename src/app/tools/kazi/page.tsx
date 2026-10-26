@@ -128,7 +128,7 @@ export default function Kazi() {
             Open Kazi
           </ButtonLink>
           <Link href="/privacy" className="text-link">
-            iyanju privacy draft <Arrow />
+            iyanju privacy notice <Arrow />
           </Link>
         </div>
       </section>

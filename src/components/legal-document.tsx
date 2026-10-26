@@ -1,5 +1,6 @@
 import { PageIntro } from "./ui";
 import type { LegalSection } from "@/content/privacy";
+import { site } from "@/content/site";
 export function LegalDocument({
   title,
   intro,
@@ -26,13 +27,7 @@ export function LegalDocument({
           </ol>
         </aside>
         <article className="legal-content" aria-label={title}>
-          <div className="draft-notice">
-            <strong>Draft for review · No effective date</strong>
-            <p>
-              This text reflects the implementation and matters still to be
-              confirmed. It has not been adopted as a final legal notice.
-            </p>
-          </div>
+          <p className="legal-updated">Last updated {site.legalUpdatedDate}</p>
           {sections.map((s) => (
             <section key={s.id} id={s.id}>
               <h2>{s.title}</h2>

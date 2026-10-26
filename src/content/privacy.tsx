@@ -2,30 +2,28 @@ import type { ReactNode } from "react";
 import { site, emailLink } from "./site";
 import { kazi } from "./products";
 import { identityConfig } from "@/lib/identity-config";
+
 const accountsEnabled = identityConfig(process.env).enabled;
 export type LegalSection = { id: string; title: string; content: ReactNode };
 
-// Common operator/support clauses are reusable; product-specific processing belongs in each tool's complete notice.
 export const operatorClause = (
   <p>
-    {site.name} is a brand used by{" "}
-    <strong>{site.operator.name}, an individual</strong>, who creates and
-    operates this website. No separate company or LLC has been registered. Where
-    applicable, {site.operator.name} is the controller of personal information
-    used for the independent website and support purposes described here.
-    Supplied contact location: {site.operator.location}. A full business mailing
-    address has not yet been confirmed.
+    I’m <strong>{site.operator.name}</strong>, the individual creator and
+    operator of {site.name}. I’m responsible for the personal information used
+    to operate this website and respond to enquiries, and act as its controller
+    where applicable. My contact address is {site.operator.address}.
   </p>
 );
+
 export const contactClause = (
   <p>
     Email{" "}
     <a href={emailLink("iyanju privacy request")}>{site.operator.email}</a> with
-    the subject “iyanju privacy request.” Mention the relevant tool and request,
-    and share only what is needed. Do not send passwords, access tokens, or
-    private calendar links. You can make a request without an account.
-    Proportionate verification may be needed to protect information and confirm
-    authority to act.
+    the subject “iyanju privacy request.” Mention the relevant tool and what you
+    need, and share only the information necessary to handle your request.
+    Please leave out passwords, access tokens, and private calendar links. You
+    can make a request without an account. I may need to verify your identity or
+    authority to protect the information involved.
   </p>
 );
 
@@ -37,243 +35,212 @@ export const privacySections: LegalSection[] = [
       <>
         {operatorClause}
         <p>
-          This draft covers <strong>{site.url}</strong>, related enquiries, and
-          account features. The website uses Vercel hosting and Cloudflare DNS.
-          This remains a draft without an effective date while the operator
-          completes the wider policy and provider review.
+          This notice covers <strong>{site.url}</strong>, enquiries sent through
+          its contact address, and account features when available. It explains
+          what this website handles and how to contact me about your privacy.
         </p>
       </>
     ),
   },
   {
     id: "tools",
-    title: "2. The website and the tools",
+    title: "2. The website and the applications",
     content: (
       <>
         <p>
-          This website introduces independently built software. It does not load
-          your Kazi tasks, projects, calendar, agent credentials, or workspace
-          membership. Following a product link takes you to that product’s
-          service.
+          iyanju introduces personal projects and applications. This website
+          does not load your Kazi tasks, projects, calendar, agent credentials,
+          or workspace membership. Following an application link takes you to
+          that application’s service, which has its own data and permissions.
         </p>
         <p>
-          <a href={kazi.privacyUrl}>Kazi’s own privacy notice</a> explains its
+          <a href={kazi.privacyUrl}>Kazi’s privacy notice</a> explains its
           accounts, workspace content, optional calendar and agent connections,
-          retention, and choices. For an organization-controlled workspace, that
-          organization may determine how work information is used; its
-          instructions and responsibilities differ from the operator’s
-          independent account, security, and support purposes.
+          retention, and choices. An organization that controls a workspace may
+          have its own responsibilities for the information used there.
         </p>
         <p>
-          Shared sign-in would not combine product databases, grant
-          cross-product access, authorize AI training, share calendar
-          information, or permit undisclosed analytics.
+          Shared sign-in does not by itself combine application databases, grant
+          workspace access, share calendar information, or authorize
+          cross-application use of your content.
         </p>
       </>
     ),
   },
   {
     id: "information",
-    title: "3. Information, sources, and purposes",
+    title: "3. Information and how it is used",
     content: (
       <>
         <ul>
           <li>
-            <strong>Browsing:</strong> the application has no visitor database,
-            contact form, analytics collection endpoint, or advertising system.
-            A local or deployed web server necessarily handles requests, which
-            can include an IP address, requested path, time, and
-            browser/connection information. Hosting and security providers may
-            keep operational records under their own schedules.
+            <strong>Website requests:</strong> the web server and its hosting
+            and security providers handle information such as your IP address,
+            requested page, request time, and browser or connection details to
+            deliver the site, maintain reliability, and investigate problems.
+            There is no application visitor database, contact form, or
+            advertising system on this website.
           </li>
           <li>
-            <strong>Contact:</strong> if you email the operator, your email
-            address, message, and any information you choose to include are
-            received through email services. They are used to respond, resolve
-            the issue, and keep relevant correspondence. Information may also
-            come from a representative acting for you or a tool administrator
-            helping explain a request.
+            <strong>Correspondence:</strong> when you email me, I receive your
+            email address, message, and any information you include. I use it to
+            respond, resolve the enquiry, and keep relevant correspondence. A
+            representative or application administrator may also provide
+            information when helping with a request.
           </li>
           <li>
-            <strong>Requests and security:</strong> limited information may be
-            needed to verify a privacy request, investigate a reported problem,
-            prevent misuse, or meet a legal obligation. Do not include
-            unnecessary sensitive information.
+            <strong>Privacy and security requests:</strong> I may use limited
+            additional information to verify a request, investigate a reported
+            problem, prevent misuse, or meet a legal obligation.
           </li>
         </ul>
         <p>
-          Providing an email is voluntary. Without enough information, the
-          operator may be unable to answer or verify a specific request. This
-          public site does not make decisions with legal or similarly
-          significant effects through automated profiling.
+          Sending an email is voluntary. Without enough information, I may be
+          unable to answer or verify a specific request. This website does not
+          use automated profiling to make decisions with legal or similarly
+          significant effects about you.
         </p>
       </>
     ),
   },
   {
     id: "grounds",
-    title: "4. Grounds for processing",
+    title: "4. Reasons for processing",
     content: (
       <>
         <p>
-          Where GDPR, UK GDPR, or similar rules apply, proposed grounds for the
-          independent purposes above are legitimate interests in operating a
-          reliable website and answering enquiries, taking requested steps
-          toward a service or performing an applicable contract, and compliance
-          with a specific legal obligation when one applies. Legitimate
-          interests require considering your interests and rights.
+          I use information for the purposes described above. Where a legal
+          basis is required, this may be legitimate interests in operating a
+          reliable and secure website and answering enquiries, steps you ask me
+          to take in relation to a service, an applicable contract, or a legal
+          obligation. The basis depends on the activity and the law that
+          applies.
         </p>
         <p>
-          Consent would be sought for optional processing when required, and
-          could be withdrawn. Mere browsing is not blanket consent. Final
-          grounds and any balancing assessment must be recorded against the
-          actual deployed practices before this draft becomes effective.
+          Where consent is required for optional processing, I will ask for it
+          separately and you can withdraw it. Visiting the website is not
+          blanket consent to other uses of your information.
         </p>
       </>
     ),
   },
   {
     id: "accounts",
-    title: "5. Account information and shared identity",
+    title: "5. Accounts and application access",
     content: (
       <>
         <p>
           {accountsEnabled
-            ? "Clerk provides iyanju account registration and sign-in at /account."
-            : "Account registration and sign-in are not enabled in this environment."}{" "}
-          Public pages do not initialize Clerk or fetch a user profile. Existing
-          Kazi accounts continue to be managed by Kazi until that application
-          adopts the shared identity.
+            ? "Clerk provides account registration and sign-in for iyanju."
+            : "Account registration and sign-in are not currently available on this website."}{" "}
+          Public pages are readable without an account. Existing Kazi accounts
+          remain managed by Kazi; this website does not migrate them.
         </p>
-        <p>
-          When you use an account, Clerk processes your email address, username,
-          password credentials, optional profile name, verification information,
-          account ID, session cookies, device and connection details, and
-          security records to create the account, authenticate you, and help
-          prevent misuse. Production sign-in uses email or username and
-          password, with email verification; supported email-code flows may also
-          be offered. Google and GitHub sign-in are not configured for
-          production.
-        </p>
-        <p>
-          Participating applications can recognize the same identity while
-          managing their own onboarding, memberships, roles, and data. Creating
-          an iyanju account does not migrate an existing application account or
-          grant workspace access. Account profiles remain with Clerk until
-          removed, subject to security, legal, and provider retention needs.
-        </p>
-        <p>
-          Removing access or data for one tool is different from deleting the
-          whole shared identity. Deleting a Clerk profile alone does not prove
-          that product records, shared contributions, support mail, or backups
-          have been erased. Contact the operator to clarify the scope before
-          requesting removal.
-        </p>
+        {accountsEnabled && (
+          <>
+            <p>
+              Clerk processes your email address, username, password
+              credentials, optional profile name, verification information,
+              account ID, session cookies, device and connection details, and
+              security records to register and authenticate you and help prevent
+              misuse.
+            </p>
+            <p>
+              Each participating application manages its own onboarding,
+              memberships, permissions, and records. An iyanju account does not
+              automatically grant access to another person’s workspace. Removing
+              an account profile is different from removing information held by
+              an application. Contact me to clarify which account or application
+              information you want removed.
+            </p>
+          </>
+        )}
       </>
     ),
   },
   {
-    id: "recipients",
+    id: "providers",
     title: "6. Providers and disclosures",
     content: (
       <>
         <p>
-          Vercel hosts the website and Cloudflare manages its DNS. Local
-          development uses a local server. The contact address uses Gmail;
-          sending mail also involves your own email provider. Clerk provides the
-          account service when enabled.
+          Vercel hosts the website, Cloudflare manages its DNS, and the contact
+          address uses Gmail. Sending an email also involves your email
+          provider.
+          {accountsEnabled && " Clerk provides the account service."} These
+          providers handle information needed to deliver their services,
+          including operational and security records.
         </p>
         <p>
-          This public site does not use Convex, Resend, a calendar API, or an AI
-          model API. Those services must not be inferred from Kazi’s separate
-          implementation. Fonts and brand artwork are served from this site.
+          I may disclose information when required by law or when necessary to
+          protect rights, investigate misuse, or address a security issue.
+          Information is not sold or shared for cross-context behavioral
+          advertising through this website.
         </p>
         <p>
-          Necessary service providers may process information to deliver
-          hosting, email, identity when enabled, and security. Information may
-          be disclosed when legally required, to protect rights and security, or
-          in a properly arranged future change of operator with applicable
-          notices and safeguards. No such transfer or new LLC is claimed here.
-        </p>
-        <p>
-          Review{" "}
-          <a href="https://policies.google.com/privacy">
-            Google’s privacy information
-          </a>
-          ,{" "}
-          <a href="https://vercel.com/legal/privacy-policy">
-            Vercel’s privacy information
-          </a>{" "}
-          and{" "}
-          <a href="https://clerk.com/legal/privacy">
-            Clerk’s privacy information
-          </a>{" "}
-          for the account service. Provider contracts and region settings remain
-          part of the operator’s policy review.
+          You can read the privacy information from{" "}
+          <a href="https://vercel.com/legal/privacy-notice">Vercel</a>,{" "}
+          <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare</a>,
+          and <a href="https://policies.google.com/privacy">Google</a>
+          {accountsEnabled && (
+            <>
+              , and <a href="https://clerk.com/legal/privacy">Clerk</a>
+            </>
+          )}{" "}
+          for more about their services.
         </p>
       </>
     ),
   },
   {
-    id: "storage",
-    title: "7. Cookies, storage, and analytics",
+    id: "storage-ai",
+    title: "7. Cookies, analytics, and AI",
     content: (
       <>
         <p>
-          The public pages do not initialize account storage. Signing in uses
-          Clerk’s necessary authentication and session cookies, which may be
-          present on subsequent visits to the website. The mobile menu and
-          copy-email feedback use temporary in-memory state. Your browser may
-          cache pages, fonts, and assets. Copying the email address writes to
-          your clipboard only after you select that action.
+          Public pages do not set advertising or analytics cookies. The website
+          does not include third-party analytics, session replay,
+          fingerprinting, or an adoption-event collector. Your browser may cache
+          pages, fonts, and assets, which are served from this website. The menu
+          and copy-email feedback use temporary in-memory state. Copying the
+          email address writes to your clipboard only when you select that
+          action.
         </p>
+        {accountsEnabled && (
+          <p>
+            Clerk uses authentication and session cookies when you use an
+            account. Those cookies may remain present on later visits and
+            support account and session security.
+          </p>
+        )}
         <p>
-          No third-party analytics SDK, advertising trackers, session replay,
-          fingerprinting, or content capture is included. There is no dedicated
-          adoption-event collector or server-side visitor counting system. The
-          site does not sell personal information or share it for cross-context
-          behavioral advertising through its implemented features.
-        </p>
-        <p>
-          Host/security records are separate from optional analytics and must be
-          assessed with the deployed service. Clerk’s functional storage
-          supports sign-in and session security. Any future optional analytics
-          requires purpose limits, applicable consent and opt-outs, objection
-          handling, and required preference-signal handling before collection
-          starts.
-        </p>
-        <p>
-          AI assistance in writing this software does not mean your browsing or
-          email content is automatically sent to an AI service by this website.
+          This website was built with assistance from AI. It does not send your
+          browsing activity or email content to an AI model through its
+          implemented features. An application that uses AI at runtime explains
+          that separately in its own information and privacy notice.
         </p>
       </>
     ),
   },
   {
     id: "retention",
-    title: "8. Retention and deletion",
+    title: "8. Retention and removal",
     content: (
       <>
         <p>
-          There is no application visitor database to erase here. Support
-          correspondence is retained according to the need to resolve and
-          document the enquiry, security concerns, legal duties, and any
-          relevant dispute. Mail and hosting provider schedules may also affect
-          records and backups. A documented category-by-category schedule and
-          actual removal process remain to be confirmed; no fixed deletion
-          deadline or verified backup-erasure period is promised.
+          I keep correspondence for as long as needed to handle and document the
+          enquiry, address security concerns, meet legal obligations, or resolve
+          a relevant dispute. Hosting, email, and other providers also maintain
+          records and backups under their own retention practices. There is no
+          application visitor database or optional analytics database on this
+          website.
         </p>
         <p>
-          There is no optional analytics pipeline. Account and support records
-          are personal information and are handled separately from any future
-          anonymous statistics.
-        </p>
-        <p>
-          Tool records follow each product’s own notice and the applicable
-          controller’s responsibilities. Archiving content, removing membership,
-          revoking a connection, and deleting an account have different effects.
-          Verified requests will need to be scoped and evaluated with applicable
-          legal limits and provider capabilities.
+          You can ask me to remove information you have provided. I will
+          consider the request and explain any applicable limits, including
+          legal requirements, shared records, or provider capabilities.
+          Application content and accounts follow the relevant application’s
+          notice and removal process.
         </p>
       </>
     ),
@@ -284,24 +251,17 @@ export const privacySections: LegalSection[] = [
     content: (
       <>
         <p>
-          The implementation minimizes collected data, keeps administrative
-          credentials out of browser code, and isolates optional account
-          features. Hosting should use encrypted transport and proportionate
-          access controls. No service can guarantee absolute security; report
-          concerns through the contact address without including secrets.
+          The website uses HTTPS and keeps administrative credentials out of
+          browser code. I limit the information collected and keep account
+          features separate from public pages. No service can guarantee absolute
+          security. Please report concerns through the contact address without
+          including passwords or other secrets.
         </p>
         <p>
-          The operator is in the United States. Email, hosting when deployed,
-          and identity when enabled may involve processing in the United States
-          and other provider locations, where laws differ. Actual regions,
-          subprocessors, agreements, and any required transfer mechanism must be
-          verified before this notice is made effective. No EU-only hosting,
-          adequacy certification, appointed representative, or established
-          transfer safeguard is asserted.
-        </p>
-        <p>
-          Where law requires a transfer arrangement or incident notification,
-          the applicable requirements need to be met. Using the site is not
+          My contact location is Benin. Hosting, email, and account providers
+          may process information in other countries, where privacy laws may
+          differ from those where you live. Any applicable requirements for
+          international processing remain relevant; using this website is not
           blanket consent to an international transfer.
         </p>
       </>
@@ -309,83 +269,54 @@ export const privacySections: LegalSection[] = [
   },
   {
     id: "rights",
-    title: "10. Your choices and requests",
+    title: "10. Your privacy choices",
     content: (
       <>
         <p>
-          Depending on your location, applicable law, and its conditions, rights
-          may include access, correction, deletion, restriction, portability,
-          objection to legitimate-interest processing, withdrawal of consent,
-          and applicable opt-outs or appeals. You may also complain to a
-          competent regulator. No claim is made that every regional law applies
-          regardless of thresholds.
+          Depending on the applicable law and its conditions, you may have
+          rights to access, correct, delete, restrict, or receive a copy of your
+          information, object to processing, or withdraw consent. You can
+          contact me to exercise a right or ask how your information is handled.
+          I will respond within the applicable legal time limits and explain any
+          lawful limits or extensions.
         </p>
         {contactClause}
         <p>
-          Requests should be handled within applicable legal deadlines, with an
-          explanation of lawful limits or extensions and available appeal or
-          complaint routes. An organization may need to handle requests about
-          its controlled workspace content with the operator’s assistance.
-        </p>
-        <p>
-          Where applicable, EEA/UK/Swiss rights and US state rights can be
-          exercised through the same contact. Find your{" "}
-          <a href="https://www.edpb.europa.eu/about-edpb/our-members_en">
-            EEA authority
+          You may also complain to the relevant data protection authority,
+          including Benin’s{" "}
+          <a href="https://service.apdp.bj/">
+            Autorité de Protection des Données Personnelles (APDP)
           </a>
-          , the <a href="https://ico.org.uk/make-a-complaint/">UK ICO</a>, or
-          the <a href="https://www.edoeb.admin.ch/en">Swiss FDPIC</a>.
-          Applicable US state rights may include opting out of sale, targeted
-          advertising, or certain profiling; the public site implements none of
-          those activities. Required opt-out signals must be honored if
-          applicable collection is introduced.
+          , or the competent authority where you live. An organization may need
+          to handle a request concerning information in its own workspace.
         </p>
       </>
     ),
   },
   {
     id: "children",
-    title: "11. Children and eligibility",
+    title: "11. Children",
     content: (
-      <>
-        <p>
-          The marketing website is publicly readable and does not ask for a date
-          of birth or identity document. An 18+ eligibility rule has been
-          recommended for tool accounts but is not established or enforced
-          across the products by this website. Check the individual tool’s
-          actual access rules.
-        </p>
-        <p>
-          The site is not designed to solicit children’s information. If you
-          believe a child has supplied information, contact the operator to
-          investigate and take appropriate steps under applicable law. Any
-          future age confirmation should minimize data collection; an age policy
-          is not a substitute for children’s privacy obligations.
-        </p>
-      </>
+      <p>
+        This public website does not ask for a date of birth or identity
+        document and is not designed to solicit children’s information.
+        Applications have their own access and eligibility rules. If you believe
+        a child has provided personal information, contact me so I can
+        investigate and take appropriate steps under applicable law.
+      </p>
     ),
   },
   {
     id: "changes",
     title: "12. Changes and contact",
     content: (
-      <>
-        <p>
-          This draft was prepared {site.legalReviewDate}. It is not an effective
-          finalized policy. Practices, provider arrangements, and legal
-          requirements must be reviewed before publication as an effective
-          notice. Material changes should be communicated appropriately and
-          consent sought separately where required.
-        </p>
-        {contactClause}
-        <p>
-          {site.operator.name}
-          <br />
-          {site.operator.location}
-          <br />
-          Operating independently under the {site.name} brand.
-        </p>
-      </>
+      <p>
+        I may update this notice as the website and its practices change. The
+        date above identifies the latest version. Material changes will be
+        communicated as required, and consent will be requested separately where
+        needed. For questions, contact{" "}
+        <a href={emailLink("iyanju privacy enquiry")}>{site.operator.email}</a>.
+      </p>
     ),
   },
 ];

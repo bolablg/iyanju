@@ -20,12 +20,8 @@ export function Footer() {
             <Link href="/tools">Applications</Link>
             <Link href="/about">About</Link>
             <Link href="/contact">Contact</Link>
-            <Link href="/privacy">
-              Privacy <span className="draft-label">Draft</span>
-            </Link>
-            <Link href="/terms">
-              Terms <span className="draft-label">Draft</span>
-            </Link>
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/terms">Terms</Link>
           </nav>
         </div>
         <div className="footer-meta">

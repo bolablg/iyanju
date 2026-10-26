@@ -1,7 +1,7 @@
 {
   "name": "iyanju",
   "version": "0.1.0",
-  "description": "Independent applications created with curiosity, care, and assistance from AI.",
+  "description": "Personal projects and practical tools, built with curiosity, care, and assistance from AI.",
   "private": true,
   "type": "module",
   "scripts": {

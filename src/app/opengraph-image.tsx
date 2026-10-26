@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 import { site } from "@/content/site";
-export const alt = `${site.name} — Make good things happen. Independent applications, built with assistance from AI.`;
+export const alt = `${site.name} — Make good things happen. Personal projects, built with assistance from AI.`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export default function Image() {
