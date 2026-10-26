@@ -18,8 +18,8 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "iyanju — Make good things happen.",
-    template: "%s · iyanju",
+    default: "iYANJU — Make good things happen.",
+    template: "%s · iYANJU",
   },
   description: site.description,
   alternates: { canonical: "/" },
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     type: "website",
     siteName: site.name,
     locale: "en_US",
-    title: "iyanju — Make good things happen.",
+    title: "iYANJU — Make good things happen.",
     description: site.description,
     url: site.url,
     images: [{ url: "/opengraph-image", width: 1200, height: 630 }],

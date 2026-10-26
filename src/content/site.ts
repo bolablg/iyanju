@@ -1,5 +1,5 @@
 export const site = {
-  name: "iyanju",
+  name: "iYANJU",
   url: "https://iyanju.com",
   description:
     "Personal projects and practical tools, built with curiosity, care, and assistance from AI.",
@@ -9,7 +9,7 @@ export const site = {
     address: "C/SB Maison Balogoun J., Gbetagbo, Abomey-Calavi, BENIN",
     email: "bolajibalogoun@gmail.com",
   },
-  legalUpdatedDate: "October 25, 2026",
+  legalUpdatedDate: "October 26, 2026",
 } as const;
 
 export const emailLink = (subject?: string) =>

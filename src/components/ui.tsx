@@ -15,33 +15,40 @@ export function ButtonLink({
   const cls = `button${secondary ? " button-secondary" : ""}`;
   return external ? (
     <a href={href} className={cls}>
-      {children}
+      <span>
+        <BrandCopy>{children}</BrandCopy>
+      </span>
       <Arrow diagonal />
     </a>
   ) : (
     <Link href={href} className={cls}>
-      {children}
+      <span>
+        <BrandCopy>{children}</BrandCopy>
+      </span>
       <Arrow />
     </Link>
   );
 }
+function BrandCopy({ children }: { children: ReactNode }) {
+  return typeof children === "string"
+    ? children.split(/(iYANJU)/).map((part, index) =>
+        part === "iYANJU" ? (
+          <span className="brand-case" key={index}>
+            {part}
+          </span>
+        ) : (
+          part
+        ),
+      )
+    : children;
+}
 export function Eyebrow({ children }: { children: ReactNode }) {
-  const content =
-    typeof children === "string"
-      ? children.split(/(iyanju)/).map((part, index) =>
-          part === "iyanju" ? (
-            <span className="brand-case" key={index}>
-              {part}
-            </span>
-          ) : (
-            part
-          ),
-        )
-      : children;
   return (
     <p className="eyebrow">
       <span aria-hidden="true" />
-      {content}
+      <span>
+        <BrandCopy>{children}</BrandCopy>
+      </span>
     </p>
   );
 }

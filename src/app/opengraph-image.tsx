@@ -1,9 +1,13 @@
+import { readFile } from "node:fs/promises";
 import { ImageResponse } from "next/og";
 import { site } from "@/content/site";
 export const alt = `${site.name} — Make good things happen. Personal projects, built with assistance from AI.`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export default function Image() {
+export default async function Image() {
+  const wordmark = await readFile(
+    `${process.cwd()}/public/brand/iyanju-wordmark.svg`,
+  );
   return new ImageResponse(
     <div
       style={{
@@ -27,16 +31,12 @@ export default function Image() {
           letterSpacing: -1,
         }}
       >
-        <span
-          style={{
-            display: "flex",
-            width: 14,
-            height: 14,
-            background: "#ff4400",
-            border: "2px solid #18181b",
-          }}
+        <img
+          src={`data:image/svg+xml;base64,${wordmark.toString("base64")}`}
+          alt={site.name}
+          width={191.43}
+          height={40}
         />
-        {site.name}
       </div>
       <div
         style={{

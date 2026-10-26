@@ -1,3 +1,6 @@
+import Image from "next/image";
+import { site } from "@/content/site";
+
 export function Symbol({ className = "" }: { className?: string }) {
   return (
     <svg
@@ -20,8 +23,14 @@ export function Symbol({ className = "" }: { className?: string }) {
 export function Wordmark() {
   return (
     <span className="wordmark" translate="no">
-      <Symbol />
-      <span>iyanju</span>
+      <Image
+        src="/brand/iyanju-wordmark.svg"
+        alt={site.name}
+        width={134}
+        height={28}
+        unoptimized
+        loading="eager"
+      />
     </span>
   );
 }
