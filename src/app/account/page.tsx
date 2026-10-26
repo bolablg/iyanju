@@ -1,4 +1,7 @@
-import { AccountPage } from "@/components/account-page";
+import {
+  AccountPage,
+  type AccountSearchParams,
+} from "@/components/account-page";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
   "Your account",
@@ -6,6 +9,10 @@ export const metadata = pageMetadata(
   "/account",
   true,
 );
-export default function Account() {
-  return <AccountPage />;
+export default function Account({
+  searchParams,
+}: {
+  searchParams: AccountSearchParams;
+}) {
+  return <AccountPage searchParams={searchParams} />;
 }

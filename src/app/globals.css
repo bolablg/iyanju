@@ -908,6 +908,30 @@ main:focus {
 .account-panel > .cl-rootBox {
   margin-bottom: 20px;
 }
+.signup-age-check {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  margin-block: 22px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.signup-age-check input {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  accent-color: var(--ink);
+}
+.signup-age-confirmation .button:disabled {
+  background: var(--wash);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+.signup-age-confirmation a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .auth-loading {
   padding: 32px;
   border: 2px solid var(--ink);

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { site, emailLink } from "./site";
 import { kazi } from "./products";
 import { identityConfig } from "@/lib/identity-config";
+import { MINIMUM_ACCOUNT_AGE } from "@/lib/account-eligibility";
 
 const accountsEnabled = identityConfig(process.env).enabled;
 export type LegalSection = { id: string; title: string; content: ReactNode };
@@ -144,6 +145,20 @@ export const privacySections: LegalSection[] = [
               account ID, session cookies, device and connection details, and
               security records to register and authenticate you and help prevent
               misuse.
+            </p>
+            <p>
+              You must be {MINIMUM_ACCOUNT_AGE} or older to create an iYANJU
+              account. During signup, we record your minimum-age confirmation
+              and its timestamp with your account. This is a self-declaration;
+              we do not request your date of birth or verify your age.
+            </p>
+            <p>
+              If you choose Google or GitHub sign-in, that provider shares the
+              identity and basic profile information needed to authenticate you,
+              such as your account identifier and email address. This does not
+              connect your calendars, repositories, or YouTube data to an
+              application. Those optional integrations require separate
+              authorization. Clerk records when your shared account was created.
             </p>
             <p>
               Each participating application manages its own onboarding,

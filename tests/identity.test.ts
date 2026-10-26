@@ -83,3 +83,37 @@ test("malformed publishable hostname cannot activate the SDK", () => {
       false,
     );
 });
+
+test("return origins are explicit and obey the same environment boundary", () => {
+  const env = {
+    ...credentials("live"),
+    IYANJU_AUTH_REVIEWED: "true",
+    IYANJU_AUTHORIZED_PARTIES: "https://iyanju.com",
+    IYANJU_ACCOUNT_RETURN_ORIGINS:
+      "https://wlan.iyanju.com,https://kazi.iyanju.com",
+  };
+  const config = identityConfig(env);
+  assert.equal(config.enabled, true);
+  if (config.enabled)
+    assert.deepEqual(config.returnOrigins, [
+      "https://wlan.iyanju.com",
+      "https://kazi.iyanju.com",
+    ]);
+  for (const origin of [
+    "https://*.iyanju.com",
+    "https://untrusted.iyanju.com",
+    "https://wlan.iyanju.com/path",
+    "http://127.0.0.1:3000",
+  ])
+    assert.equal(
+      identityConfig({ ...env, IYANJU_ACCOUNT_RETURN_ORIGINS: origin }).enabled,
+      false,
+    );
+  assert.equal(
+    identityConfig({
+      ...credentials(),
+      IYANJU_ACCOUNT_RETURN_ORIGINS: "http://127.0.0.1:3010",
+    }).enabled,
+    true,
+  );
+});
