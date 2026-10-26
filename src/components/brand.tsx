@@ -16,7 +16,7 @@ export function Wordmark() {
     <span className="wordmark" translate="no">
       <Symbol />
       <span>
-        iYanJu<span className="wordmark-dot">.</span>
+        iyanju<span className="wordmark-dot">.</span>
       </span>
     </span>
   );

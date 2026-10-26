@@ -11,3 +11,8 @@ playwright-report/
 .venv/
 __pycache__/
 local/
+/AGENTS.md
+/RTK.md
+/MASTER_INSTRUCTIONS.md
+/.stitch/
+/.clerk/

@@ -1,9 +1,9 @@
 import { PageIntro, ProductFeature } from "@/components/ui";
 import { pageMetadata } from "@/lib/metadata";
-import { products } from "@/content/products";
+import { products, relatedProjects } from "@/content/products";
 export const metadata = pageMetadata(
   "The tools",
-  "An independent collection of useful software. Start with Kazi, work management for people, teams, and connected agents.",
+  "Explore Kazi, PlayKin, and iyanju Agentory: independent applications for work, music, and everyday projects.",
   "/tools",
 );
 export default function Tools() {
@@ -20,30 +20,37 @@ export default function Tools() {
         }
       >
         <p>
-          A collection that starts with a real need, then grows with care. Meet
-          the first tool from iYanJu.
+          Independent applications for work, music, and everyday projects. Each
+          has its own purpose, data, and permissions.
         </p>
       </PageIntro>
       <section className="container catalogue">
         <div className="catalogue-index">
           <span>
-            {String(products.length).padStart(2, "0")} TOOL IN THE COLLECTION
+            {String(products.length + relatedProjects.length).padStart(2, "0")}{" "}
+            APPLICATIONS & PROJECTS
           </span>
           <span>INDEPENDENTLY BUILT</span>
         </div>
         {products.map((p) => (
           <ProductFeature key={p.slug} product={p} full />
         ))}
-        <div className="catalogue-note">
-          <span aria-hidden="true">↗</span>
-          <p>
-            One useful tool is a good beginning.
-            <br />
-            <span>
-              More will belong here when there’s something real to share.
-            </span>
-          </p>
-        </div>
+        {relatedProjects.map((project) => (
+          <div className="catalogue-note" key={project.name}>
+            <span aria-hidden="true">↗</span>
+            <div>
+              <h2>{project.name}</h2>
+              <p>{project.description}</p>
+              {project.url ? (
+                <a href={project.url} className="text-link">
+                  Browse on GitHub ↗
+                </a>
+              ) : (
+                <p className="small">{project.status}</p>
+              )}
+            </div>
+          </div>
+        ))}
       </section>
     </>
   );

@@ -58,3 +58,19 @@ export const products: Product[] = [
   },
 ];
 export const kazi = products[0];
+
+export const relatedProjects = [
+  {
+    name: "PlayKin",
+    description:
+      "A YouTube companion for playlist management and shared listening.",
+    status: "In development",
+    url: null,
+  },
+  {
+    name: "iyanju Agentory",
+    description: "Portable skills and integrations for AI assistants.",
+    status: "Public repository",
+    url: "https://github.com/bolablg/skills",
+  },
+] as const;

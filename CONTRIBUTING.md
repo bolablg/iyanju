@@ -20,7 +20,7 @@ rtk proxy git pull --ff-only
 
 For another development branch, choose a name such as `dev-contact-update` and branch from the current development/integration baseline. Keep `dev-bola` as the usual working checkout. Resolve conflicts on a development branch and merge the target branch into it when needed; do not force-push shared history.
 
-Before promotion run the existing build, type, lint, formatting, unit, and browser checks described in README.md. Open a pull request with **base `staging`** and **head `dev-bola`** (or another `dev-*` branch); GitHub's default base may be `dev-bola`, so select the intended target explicitly. After integration review, open a separate pull request with **base `main`** and **head `staging`**. Do not skip staging.
+Before promotion run the project’s build, type, lint, formatting, unit, and browser checks. Open a pull request with **base `staging`** and **head `dev-bola`** (or another `dev-*` branch); GitHub's default base may be `dev-bola`, so select the intended target explicitly. After integration review, open a separate pull request with **base `main`** and **head `staging`**. Do not skip staging.
 
 Use merge commits for promotion so the long-lived branches retain common ancestry. Squash/rebase merge and automatic head-branch deletion are disabled for this repository. After a release, synchronize development with the target history using an ordinary merge when needed.
 

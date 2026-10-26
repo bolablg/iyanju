@@ -19,7 +19,7 @@ export function pageMetadata(
           url: "/opengraph-image",
           width: 1200,
           height: 630,
-          alt: "iYanJu — Good ideas. Put to work.",
+          alt: "iyanju — Good ideas. Put to work.",
         },
       ],
     },

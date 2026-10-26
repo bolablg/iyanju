@@ -15,7 +15,7 @@ export default function NotFound() {
         The link may have changed, or the page may not exist. There’s still
         something useful back at the start.
       </p>
-      <ButtonLink href="/">Back to iYanJu</ButtonLink>
+      <ButtonLink href="/">Back to iyanju</ButtonLink>
     </div>
   );
 }

@@ -68,7 +68,7 @@ export default function Home() {
             <em>AI-assisted effort.</em>
           </h2>
           <Link href="/about" className="text-link">
-            The story behind iYanJu <Arrow />
+            The story behind iyanju <Arrow />
           </Link>
         </div>
         <div className="approach-notes">
@@ -102,7 +102,7 @@ export default function Home() {
         <div className="container">
           <span className="eyebrow">A NOTE FROM THE MAKER</span>
           <blockquote>
-            “For me, iYanJu is a reminder to keep trying. To take an idea, put
+            “For me, iyanju is a reminder to keep trying. To take an idea, put
             in the effort, and make something useful.”
           </blockquote>
           <div className="founder-attribution">
@@ -111,7 +111,7 @@ export default function Home() {
             </span>
             <p>
               {site.operator.name}
-              <span>Creator & operator of iYanJu</span>
+              <span>Creator & operator of iyanju</span>
             </p>
             <Link href="/about" className="text-link">
               A little more about the story <Arrow />

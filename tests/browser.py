@@ -1,5 +1,5 @@
 """Meaningful public journeys, accessibility, network privacy, and responsive checks.
-Run against a separately running iYanJu preview. Artifacts stay in ignored test-results/.
+Run against a separately running iyanju preview. Artifacts stay in ignored test-results/.
 """
 import json
 import os
@@ -32,7 +32,7 @@ with sync_playwright() as p:
             assert response.status == (404 if "does-not-exist" in route else 200), (width, route, response.status)
             expect(page.locator("main h1")).to_have_count(1)
             assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), ("overflow", width, route)
-            assert "iYanJu" in page.title()
+            assert "iyanju" in page.title()
             if route in ["/privacy", "/terms", "/account", "/account/sign-up"]:
                 assert "noindex" in page.locator('meta[name="robots"]').get_attribute("content")
             elif "does-not-exist" not in route:
@@ -82,7 +82,7 @@ with sync_playwright() as p:
 
     page.goto(BASE + "/contact")
     page.wait_for_load_state("networkidle")
-    expect(page.locator("a.email-address")).to_have_attribute("href", "mailto:bolajibalogoun@gmail.com?subject=Hello%20iYanJu")
+    expect(page.locator("a.email-address")).to_have_attribute("href", "mailto:bolajibalogoun@gmail.com?subject=Hello%20iyanju")
     page.get_by_role("button", name="Copy email address").click()
     expect(page.get_by_role("status")).to_have_text("Email address copied.")
     assert page.evaluate("navigator.clipboard.readText()") == "bolajibalogoun@gmail.com"
@@ -97,7 +97,7 @@ with sync_playwright() as p:
         expect(page.locator("main h1")).to_be_visible()
     expect(page.get_by_role("link", name="Open Kazi", exact=True).first).to_be_visible()
     page.goto(BASE + "/account")
-    expect(page.get_by_text("For now, start in Kazi.")).to_be_visible()
+    expect(page.get_by_text("Accounts will be available soon.")).to_be_visible()
     assert not page.locator("iframe").count()
     assert not context.cookies(), "Public site unexpectedly set cookies"
     assert page.evaluate("localStorage.length") == 0

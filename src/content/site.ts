@@ -1,5 +1,5 @@
 export const site = {
-  name: "iYanJu",
+  name: "iyanju",
   url: "https://iyanju.com",
   description:
     "Practical tools, made with care. Independent software created and operated by Bolaji BALOGOUN with the help of AI.",

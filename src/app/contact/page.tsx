@@ -6,7 +6,7 @@ import { site, emailLink } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
   "Get in touch",
-  "Questions, feedback, or a problem worth solving? Contact Bolaji BALOGOUN, the creator and operator of iYanJu.",
+  "Questions, feedback, or a problem worth solving? Contact Bolaji BALOGOUN, the creator and operator of iyanju.",
   "/contact",
 );
 export default function Contact() {
@@ -30,7 +30,7 @@ export default function Contact() {
       <section className="container contact-grid">
         <div className="contact-email">
           <Eyebrow>WRITE TO BOLAJI</Eyebrow>
-          <a className="email-address" href={emailLink("Hello iYanJu")}>
+          <a className="email-address" href={emailLink("Hello iyanju")}>
             {site.operator.email}
             <Arrow diagonal />
           </a>
@@ -46,7 +46,7 @@ export default function Contact() {
             <p>
               {site.operator.name}
               <br />
-              Creator & operator of iYanJu
+              Creator & operator of iyanju
               <br />
               {site.operator.location}
             </p>

@@ -10,7 +10,7 @@ export default function About() {
   return (
     <>
       <PageIntro
-        eyebrow="THE STORY BEHIND iYanJu"
+        eyebrow="THE STORY BEHIND iyanju"
         title={
           <>
             A little encouragement.
@@ -29,7 +29,7 @@ export default function About() {
           <Eyebrow>FROM BOLAJI</Eyebrow>
           <h2>Hi, I’m Bolaji.</h2>
           <p>
-            I created iYanJu as a home for practical tools I build with the help
+            I created iyanju as a home for practical tools I build with the help
             of AI. It’s an independent project, and I’m the person who creates
             and operates it.
           </p>
@@ -44,9 +44,10 @@ export default function About() {
             take responsibility for the software I share.
           </p>
           <p>
-            Kazi is the first tool in the collection: a place to organize work
-            for people, teams, and connected agents. I want the collection to
-            grow from real needs, one useful product at a time.
+            The collection includes Kazi for organizing work, PlayKin for
+            playlists and shared listening, and iyanju Agentory for portable AI
+            assistant skills. Each has its own purpose and develops at its own
+            pace.
           </p>
           <p className="signature">{site.operator.name}</p>
           <span className="small">

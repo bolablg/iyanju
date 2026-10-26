@@ -5,7 +5,7 @@ import { site, emailLink } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
   "Website terms draft",
-  "Draft information about using the iYanJu website, its independent operator, and separate tool terms.",
+  "Draft information about using the iyanju website, its independent operator, and separate tool terms.",
   "/terms",
   true,
 );
@@ -43,7 +43,7 @@ const sections: LegalSection[] = [
       <>
         <p>
           Links take you to independently operated product experiences within
-          the iYanJu collection. Each tool’s actual terms, privacy notice,
+          the iyanju collection. Each tool’s actual terms, privacy notice,
           access rules, and features should be reviewed there. This catalogue
           does not grant workspace membership, product entitlements, or
           permission to access another person’s data.
@@ -63,7 +63,7 @@ const sections: LegalSection[] = [
     content: (
       <>
         <p>
-          The iYanJu identity and website content identify this independent
+          The iyanju identity and website content identify this independent
           initiative. Product names and assets belong to their respective
           owners. Linking to a tool or provider does not replace its own
           information or terms.
@@ -104,7 +104,7 @@ const sections: LegalSection[] = [
         </p>
         <p>
           For website questions, email{" "}
-          <a href={emailLink("iYanJu website enquiry")}>
+          <a href={emailLink("iyanju website enquiry")}>
             {site.operator.email}
           </a>
           . Operator: {site.operator.name}, {site.operator.location}.

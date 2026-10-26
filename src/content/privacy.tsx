@@ -18,8 +18,8 @@ export const operatorClause = (
 export const contactClause = (
   <p>
     Email{" "}
-    <a href={emailLink("iYanJu privacy request")}>{site.operator.email}</a> with
-    the subject “iYanJu privacy request.” Mention the relevant tool and request,
+    <a href={emailLink("iyanju privacy request")}>{site.operator.email}</a> with
+    the subject “iyanju privacy request.” Mention the relevant tool and request,
     and share only what is needed. Do not send passwords, access tokens, or
     private calendar links. You can make a request without an account.
     Proportionate verification may be needed to protect information and confirm
