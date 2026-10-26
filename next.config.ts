@@ -4,6 +4,8 @@ const config: NextConfig = {
   agentRules: false,
   poweredByHeader: false,
   devIndicators: false,
+  // Clerk must preserve the loopback origin instead of rewriting it to localhost.
+  skipProxyUrlNormalize: process.env.NODE_ENV === "development",
   async headers() {
     return [
       {

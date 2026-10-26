@@ -4,8 +4,23 @@ import { PageIntro } from "./ui";
 import { Arrow } from "./brand";
 import { AccountControls } from "./account-controls";
 import { identityConfig } from "@/lib/identity-config";
-export function AccountPage({ signUp = false }: { signUp?: boolean }) {
+import { accountReturnUrl } from "@/lib/account-routing";
+export type AccountSearchParams = Promise<
+  Record<string, string | string[] | undefined>
+>;
+export async function AccountPage({
+  signUp = false,
+  searchParams,
+}: {
+  signUp?: boolean;
+  searchParams?: AccountSearchParams;
+}) {
   const config = identityConfig(process.env);
+  const params = await searchParams;
+  const returnUrl = accountReturnUrl(
+    params?.redirect_url,
+    config.enabled ? config.returnOrigins : [],
+  );
   return (
     <>
       <PageIntro
@@ -27,7 +42,7 @@ export function AccountPage({ signUp = false }: { signUp?: boolean }) {
               </div>
             }
           >
-            <AccountControls signUp={signUp} />
+            <AccountControls signUp={signUp} returnUrl={returnUrl} />
           </Suspense>
         ) : (
           <div className="account-panel">
@@ -42,6 +57,14 @@ export function AccountPage({ signUp = false }: { signUp?: boolean }) {
               </Link>
             </div>
           </div>
+        )}
+        {config.enabled && (
+          <noscript>
+            <p className="account-panel">
+              Enable JavaScript to use the secure account service. You can still
+              read the public pages and contact us.
+            </p>
+          </noscript>
         )}
         <p className="small">
           Each application manages its own data and permissions.{" "}

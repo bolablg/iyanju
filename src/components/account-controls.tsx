@@ -7,11 +7,22 @@ import {
   SignUp,
   UserButton,
   useClerk,
+  useSignUp,
+  useUser,
 } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { emailLink } from "@/content/site";
 import Link from "next/link";
-export function AccountControls({ signUp = false }: { signUp?: boolean }) {
+import { SignupAgeConfirmation } from "./signup-age-confirmation";
+import { accountEntryUrl } from "@/lib/account-routing";
+import { readMinimumAgeConfirmation } from "@/lib/account-eligibility";
+export function AccountControls({
+  signUp = false,
+  returnUrl = "/account",
+}: {
+  signUp?: boolean;
+  returnUrl?: string;
+}) {
   const [delayed, setDelayed] = useState(false);
   useEffect(() => {
     const timer = setTimeout(() => setDelayed(true), 12000);
@@ -24,7 +35,7 @@ export function AccountControls({ signUp = false }: { signUp?: boolean }) {
           {delayed ? (
             <>
               The account service is taking longer than expected. Public pages
-              and Kazi links remain available.{" "}
+              and application links remain available.{" "}
               <a
                 className="text-link"
                 href={emailLink("Account connection help")}
@@ -41,23 +52,80 @@ export function AccountControls({ signUp = false }: { signUp?: boolean }) {
         <Show when="signed-out">
           <div className="clerk-controls">
             {signUp ? (
-              <SignUp routing="hash" signInUrl="/account" />
+              <SignupControls returnUrl={returnUrl} />
             ) : (
-              <SignIn routing="hash" signUpUrl="/account/sign-up" />
+              <SignIn
+                routing="hash"
+                signUpUrl={accountEntryUrl(true, returnUrl)}
+                forceRedirectUrl={accountEntryUrl(false, returnUrl)}
+                signUpForceRedirectUrl={accountEntryUrl(true, returnUrl)}
+                withSignUp={false}
+                transferable={false}
+              />
             )}
           </div>
         </Show>
         <Show when="signed-in">
-          <SignedInControls />
+          <SignedInControls returnUrl={returnUrl} />
         </Show>
       </ClerkLoaded>
     </>
   );
 }
-function SignedInControls() {
+function SignupControls({ returnUrl }: { returnUrl: string }) {
+  const { signUp } = useSignUp();
+  return (
+    <SignupAgeConfirmation
+      signInUrl={accountEntryUrl(false, returnUrl)}
+      pendingConfirmation={
+        signUp.status === "missing_requirements"
+          ? signUp.unsafeMetadata.minimumAgeConfirmation
+          : undefined
+      }
+    >
+      {(confirmation) => (
+        <SignUp
+          routing="hash"
+          signInUrl={accountEntryUrl(false, returnUrl)}
+          forceRedirectUrl={accountEntryUrl(false, returnUrl)}
+          signInForceRedirectUrl={accountEntryUrl(false, returnUrl)}
+          unsafeMetadata={{
+            ...signUp.unsafeMetadata,
+            minimumAgeConfirmation: confirmation,
+          }}
+        />
+      )}
+    </SignupAgeConfirmation>
+  );
+}
+function SignedInControls({ returnUrl }: { returnUrl: string }) {
+  const { user } = useUser();
+  if (!user) return <p role="status">Loading your account…</p>;
+  if (!readMinimumAgeConfirmation(user.unsafeMetadata.minimumAgeConfirmation))
+    return (
+      <SignupAgeConfirmation
+        title="Confirm your account eligibility."
+        onConfirm={async (confirmation) => {
+          await user.update({
+            unsafeMetadata: {
+              ...user.unsafeMetadata,
+              minimumAgeConfirmation: confirmation,
+            },
+          });
+        }}
+      >
+        {() => <SignedInAccount returnUrl={returnUrl} />}
+      </SignupAgeConfirmation>
+    );
+  return <SignedInAccount returnUrl={returnUrl} />;
+}
+function SignedInAccount({ returnUrl }: { returnUrl: string }) {
   const { signOut } = useClerk();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
+  useEffect(() => {
+    if (returnUrl !== "/account") window.location.assign(returnUrl);
+  }, [returnUrl]);
   async function leave() {
     setPending(true);
     setError("");
@@ -77,6 +145,13 @@ function SignedInControls() {
         membership, and permissions. Existing application accounts are adopted
         separately.
       </p>
+      {returnUrl !== "/account" && (
+        <p>
+          <a className="button" href={returnUrl}>
+            Continue to your application →
+          </a>
+        </p>
+      )}
       <p>
         <Link href="/tools" className="text-link">
           Explore the applications →
