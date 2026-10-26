@@ -17,6 +17,11 @@ export default function AccountLayout({
       signUpUrl="/account/sign-up"
       signInFallbackRedirectUrl="/account"
       signUpFallbackRedirectUrl="/account"
+      allowedRedirectOrigins={config.returnOrigins}
+      allowedRedirectProtocols={[
+        "https:",
+        ...(config.publishableKey.startsWith("pk_test_") ? ["http:"] : []),
+      ]}
       appearance={{
         variables: {
           colorPrimary: "#18181b",
