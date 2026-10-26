@@ -50,9 +50,7 @@ export default function About() {
             own direction as it matures.
           </p>
           <p className="signature">{site.operator.name}</p>
-          <span className="small">
-            Creator & operator · {site.operator.location}
-          </span>
+          <span className="small">{site.operator.location}</span>
         </div>
         <aside className="maker-card" aria-labelledby="maker-projects-heading">
           <Eyebrow>THE COLLECTION</Eyebrow>

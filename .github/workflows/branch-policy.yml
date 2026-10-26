@@ -2,41 +2,80 @@ name: Branch policy
 
 on:
   workflow_dispatch:
-  push:
-    branches: ["dev-*", staging, main]
+    inputs:
+      pull_request:
+        description: Pull request number to validate
+        required: true
+        type: string
   pull_request_target:
     branches: ["dev-*", staging, main]
     types: [opened, synchronize, reopened, edited, ready_for_review]
 
 permissions:
   contents: read
+  pull-requests: read
+  checks: write
 
 jobs:
-  branch-policy:
-    name: branch-policy
+  validate-promotion:
+    name: Validate promotion
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - name: Resolve the current pull request
+        id: request
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number || inputs.pull_request }}
+        with:
+          script: |
+            const number = Number(process.env.PR_NUMBER);
+            if (!Number.isSafeInteger(number) || number < 1) throw new Error('A pull request number is required.');
+            const { data: pr } = await github.rest.pulls.get({ ...context.repo, pull_number: number });
+            if (pr.state !== 'open') throw new Error('The pull request must be open.');
+            core.setOutput('number', number);
+            core.setOutput('base_sha', pr.base.sha);
+            core.setOutput('head_sha', pr.head.sha);
       # On PRs, execute only trusted policy from the base SHA, never head code.
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          ref: ${{ steps.request.outputs.base_sha }}
           persist-credentials: false
           sparse-checkout: .github/scripts
       - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        env:
+          PR_NUMBER: ${{ steps.request.outputs.number }}
+          EXPECTED_HEAD_SHA: ${{ steps.request.outputs.head_sha }}
+          EXPECTED_BASE_SHA: ${{ steps.request.outputs.base_sha }}
         with:
           script: |
-            const { isAllowedBranch, validatePromotion } = await import(`${process.env.GITHUB_WORKSPACE}/.github/scripts/branch-policy.mjs`);
-            const pr = context.payload.pull_request;
-            if (pr) {
+            const { validatePromotion } = await import(`${process.env.GITHUB_WORKSPACE}/.github/scripts/branch-policy.mjs`);
+            const { data: pr } = await github.rest.pulls.get({ ...context.repo, pull_number: Number(process.env.PR_NUMBER) });
+            if (pr.state !== 'open' || pr.head.sha !== process.env.EXPECTED_HEAD_SHA || pr.base.sha !== process.env.EXPECTED_BASE_SHA) {
+              throw new Error('The pull request changed during validation. Run the check again.');
+            }
+            let conclusion = 'success';
+            let summary = `Allowed promotion: ${pr.head.ref} → ${pr.base.ref}`;
+            try {
               validatePromotion({
                 base: pr.base.ref,
                 head: pr.head.ref,
                 sameRepository: pr.head.repo?.full_name === pr.base.repo.full_name,
               });
-              core.info(`Allowed promotion: ${pr.head.ref} → ${pr.base.ref}`);
-            } else {
-              const branch = context.ref.replace(/^refs\/heads\//, '');
-              if (!isAllowedBranch(branch)) core.setFailed('Branches must be dev-*, staging, or main.');
-              else core.info(`Allowed branch: ${branch}`);
+            } catch (error) {
+              conclusion = 'failure';
+              summary = error.message;
             }
+            // Explicitly report the validated PR head, including for manual retries.
+            // Dispatch job checks themselves do not satisfy GitHub branch rules.
+            await github.rest.checks.create({
+              ...context.repo,
+              name: 'branch-policy',
+              head_sha: pr.head.sha,
+              status: 'completed',
+              conclusion,
+              details_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              output: { title: 'Staged release policy', summary },
+            });
+            if (conclusion === 'failure') core.setFailed(summary);
+            else core.info(summary);

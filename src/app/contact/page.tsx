@@ -6,7 +6,7 @@ import { site, emailLink } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
   "Get in touch",
-  "Questions, feedback, or a problem worth solving? Get in touch with iyanju’s creator and operator.",
+  "Questions, feedback, or a problem worth solving? Get in touch.",
   "/contact",
 );
 export default function Contact() {
@@ -36,8 +36,6 @@ export default function Contact() {
             <h2>A person on the other end.</h2>
             <p>
               {site.operator.name}
-              <br />
-              Creator & operator of iyanju
               <br />
               {site.operator.address}
             </p>
