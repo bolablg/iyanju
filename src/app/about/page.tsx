@@ -4,14 +4,14 @@ import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
   "The story",
-  "Why iyanju exists: personal projects, a love of technology, and learning by building with assistance from AI.",
+  "Why iYANJU exists: personal projects, a love of technology, and learning by building with assistance from AI.",
   "/about",
 );
 export default function About() {
   return (
     <>
       <PageIntro
-        eyebrow="THE IDEA BEHIND iyanju"
+        eyebrow="THE IDEA BEHIND iYANJU"
         title="Curiosity, put to work."
       >
         <p>
@@ -21,11 +21,11 @@ export default function About() {
       </PageIntro>
       <section className="container about-grid">
         <div className="about-letter">
-          <Eyebrow>WHY iyanju?</Eyebrow>
+          <Eyebrow>WHY iYANJU?</Eyebrow>
           <h2>An idea, then the effort.</h2>
           <p>
             My professional work is in data engineering, data analysis, and
-            statistics. iyanju is a separate home for a personal interest:
+            statistics. iYANJU is a separate home for a personal interest:
             exploring technology and building applications I want to use.
           </p>
           <p>
@@ -45,7 +45,7 @@ export default function About() {
             for improvements. I take responsibility for what I share.
           </p>
           <p>
-            For now, iyanju is a passion project. I’m here to learn, make useful
+            For now, iYANJU is a passion project. I’m here to learn, make useful
             things, and let other people try them. Each application can find its
             own direction as it matures.
           </p>
@@ -56,7 +56,7 @@ export default function About() {
           <Eyebrow>THE COLLECTION</Eyebrow>
           <h2 id="maker-projects-heading">Room for the next idea.</h2>
           <p>
-            I don’t limit iyanju to one field. I build applications around ideas
+            I don’t limit iYANJU to one field. I build applications around ideas
             worth working on.
           </p>
           <Link href="/tools" className="text-link">

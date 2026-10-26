@@ -32,7 +32,7 @@ with sync_playwright() as p:
             assert response.status == (404 if "does-not-exist" in route else 200), (width, route, response.status)
             expect(page.locator("main h1")).to_have_count(1)
             assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), ("overflow", width, route)
-            assert "iyanju" in page.title()
+            assert "iYANJU" in page.title()
             if route in ["/account", "/account/sign-up"]:
                 assert "noindex" in page.locator('meta[name="robots"]').get_attribute("content")
             elif "does-not-exist" not in route:
@@ -82,7 +82,7 @@ with sync_playwright() as p:
 
     page.goto(BASE + "/contact")
     page.wait_for_load_state("networkidle")
-    expect(page.locator("a.email-address")).to_have_attribute("href", "mailto:bolajibalogoun@gmail.com?subject=Hello%20iyanju")
+    expect(page.locator("a.email-address")).to_have_attribute("href", "mailto:bolajibalogoun@gmail.com?subject=Hello%20iYANJU")
     page.get_by_role("button", name="Copy email address").click()
     expect(page.get_by_role("status")).to_have_text("Email address copied.")
     assert page.evaluate("navigator.clipboard.readText()") == "bolajibalogoun@gmail.com"

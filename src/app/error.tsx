@@ -13,7 +13,7 @@ export default function ErrorPage({ retry }: { retry: () => void }) {
           Try again
         </button>
         <Link className="text-link" href="/">
-          Back to iyanju →
+          Back to iYANJU →
         </Link>
       </div>
     </div>

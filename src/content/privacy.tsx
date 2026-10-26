@@ -18,8 +18,8 @@ export const operatorClause = (
 export const contactClause = (
   <p>
     Email{" "}
-    <a href={emailLink("iyanju privacy request")}>{site.operator.email}</a> with
-    the subject “iyanju privacy request.” Mention the relevant tool and what you
+    <a href={emailLink("iYANJU privacy request")}>{site.operator.email}</a> with
+    the subject “iYANJU privacy request.” Mention the relevant tool and what you
     need, and share only the information necessary to handle your request.
     Please leave out passwords, access tokens, and private calendar links. You
     can make a request without an account. I may need to verify your identity or
@@ -48,7 +48,7 @@ export const privacySections: LegalSection[] = [
     content: (
       <>
         <p>
-          iyanju introduces personal projects and applications. This website
+          iYANJU introduces personal projects and applications. This website
           does not load your Kazi tasks, projects, calendar, agent credentials,
           or workspace membership. Following an application link takes you to
           that application’s service, which has its own data and permissions.
@@ -131,7 +131,7 @@ export const privacySections: LegalSection[] = [
       <>
         <p>
           {accountsEnabled
-            ? "Clerk provides account registration and sign-in for iyanju."
+            ? "Clerk provides account registration and sign-in for iYANJU."
             : "Account registration and sign-in are not currently available on this website."}{" "}
           Public pages are readable without an account. Existing Kazi accounts
           remain managed by Kazi; this website does not migrate them.
@@ -147,7 +147,7 @@ export const privacySections: LegalSection[] = [
             </p>
             <p>
               Each participating application manages its own onboarding,
-              memberships, permissions, and records. An iyanju account does not
+              memberships, permissions, and records. An iYANJU account does not
               automatically grant access to another person’s workspace. Removing
               an account profile is different from removing information held by
               an application. Contact me to clarify which account or application
@@ -315,7 +315,7 @@ export const privacySections: LegalSection[] = [
         date above identifies the latest version. Material changes will be
         communicated as required, and consent will be requested separately where
         needed. For questions, contact{" "}
-        <a href={emailLink("iyanju privacy enquiry")}>{site.operator.email}</a>.
+        <a href={emailLink("iYANJU privacy enquiry")}>{site.operator.email}</a>.
       </p>
     ),
   },

@@ -43,7 +43,7 @@ export function StudioHome() {
           <span aria-hidden="true" />A note from the maker
         </h2>
         <blockquote>
-          “For me, iyanju is a reminder to keep trying. To take an idea, put in
+          “For me, iYANJU is a reminder to keep trying. To take an idea, put in
           the effort, and make something useful.”
         </blockquote>
         <p>
@@ -52,7 +52,7 @@ export function StudioHome() {
           its proposals, and share what takes shape for others to try.
         </p>
         <Link className="maker-signature text-link" href="/about">
-          More about iyanju <Arrow />
+          More about iYANJU <Arrow />
         </Link>
       </section>
       <section

@@ -26,7 +26,7 @@ export default function Kazi() {
               alt="Kazi"
               priority
             />
-            <Eyebrow>WORK MANAGEMENT / AN iyanju TOOL</Eyebrow>
+            <Eyebrow>WORK MANAGEMENT / AN iYANJU TOOL</Eyebrow>
             <h1>
               Less scattered.
               <br />
@@ -120,7 +120,7 @@ export default function Kazi() {
       </section>
       <section className="container product-final">
         <p>
-          Kazi is part of iyanju, an independent software initiative operated by{" "}
+          Kazi is part of iYANJU, an independent software initiative operated by{" "}
           {site.operator.name}.
         </p>
         <div className="button-row">
@@ -128,7 +128,7 @@ export default function Kazi() {
             Open Kazi
           </ButtonLink>
           <Link href="/privacy" className="text-link">
-            iyanju privacy notice <Arrow />
+            iYANJU privacy notice <Arrow />
           </Link>
         </div>
       </section>

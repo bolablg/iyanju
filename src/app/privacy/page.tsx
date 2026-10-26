@@ -3,7 +3,7 @@ import { privacySections } from "@/content/privacy";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
   "Privacy",
-  "How iyanju handles website visits, enquiries, accounts, and your privacy choices.",
+  "How iYANJU handles website visits, enquiries, accounts, and your privacy choices.",
   "/privacy",
 );
 export default function Privacy() {

@@ -10,12 +10,12 @@ export function AccountPage({ signUp = false }: { signUp?: boolean }) {
     <>
       <PageIntro
         eyebrow="YOUR ACCOUNT"
-        title={signUp ? "Join iyanju." : "Sign in to iyanju."}
+        title={signUp ? "Join iYANJU." : "Sign in to iYANJU."}
       >
         <p>
           {signUp
-            ? "Create your account for participating iyanju applications."
-            : "Use your iyanju account to continue."}
+            ? "Create your account for participating iYANJU applications."
+            : "Use your iYANJU account to continue."}
         </p>
       </PageIntro>
       <section className="container account-content">
