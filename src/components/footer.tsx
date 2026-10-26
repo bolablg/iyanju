@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { Wordmark, Arrow } from "./brand";
-import { site, emailLink } from "@/content/site";
+import { Wordmark } from "./brand";
+import { site } from "@/content/site";
 export function Footer() {
   return (
     <footer className="site-footer">
       <div className="container">
-        <div className="footer-top">
-          <div>
-            <Link href="/" aria-label="iYanJu home">
+        <div className="footer-main">
+          <div className="footer-brand">
+            <Link href="/" aria-label="iyanju home">
               <Wordmark />
             </Link>
             <p>
@@ -16,29 +16,16 @@ export function Footer() {
               Something useful.
             </p>
           </div>
-          <div className="footer-invite">
-            <p>Have a problem worth solving?</p>
-            <Link href="/contact">
-              Let’s talk <Arrow diagonal />
-            </Link>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <p>
-            Created & operated by {site.operator.name}.<br />
-            <span>An independent software initiative.</span>
-          </p>
           <nav aria-label="Footer navigation">
-            <Link href="/privacy">
-              Privacy <span className="draft-label">Draft</span>
-            </Link>
-            <Link href="/terms">
-              Website terms <span className="draft-label">Draft</span>
-            </Link>
-            <a href={emailLink()}>
-              Email <Arrow diagonal />
-            </a>
+            <Link href="/tools">Applications</Link>
+            <Link href="/about">About</Link>
+            <Link href="/contact">Contact</Link>
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/terms">Terms</Link>
           </nav>
+        </div>
+        <div className="footer-meta">
+          <p>Built with curiosity, care, and assistance from AI.</p>
           <span className="copyright">© 2026 {site.name}</span>
         </div>
       </div>

@@ -1,37 +1,32 @@
-import { PageIntro, Eyebrow, ButtonLink, EffortArt } from "@/components/ui";
+import { PageIntro, Eyebrow, ButtonLink } from "@/components/ui";
+import Link from "next/link";
 import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
   "The story",
-  "A note from Bolaji BALOGOUN on effort, encouragement, and building practical software with AI.",
+  "Why iyanju exists: personal projects, a love of technology, and learning by building with assistance from AI.",
   "/about",
 );
 export default function About() {
   return (
     <>
       <PageIntro
-        eyebrow="THE STORY BEHIND iYanJu"
-        title={
-          <>
-            A little encouragement.
-            <br />
-            <em>A lot of possibility.</em>
-          </>
-        }
+        eyebrow="THE IDEA BEHIND iyanju"
+        title="Curiosity, put to work."
       >
         <p>
-          Software starts with an idea. Making it useful takes curiosity, care,
-          and the willingness to keep trying.
+          A home for personal projects, built for the pleasure of learning and
+          making something useful.
         </p>
       </PageIntro>
       <section className="container about-grid">
         <div className="about-letter">
-          <Eyebrow>FROM BOLAJI</Eyebrow>
-          <h2>Hi, I’m Bolaji.</h2>
+          <Eyebrow>WHY iyanju?</Eyebrow>
+          <h2>An idea, then the effort.</h2>
           <p>
-            I created iYanJu as a home for practical tools I build with the help
-            of AI. It’s an independent project, and I’m the person who creates
-            and operates it.
+            My professional work is in data engineering, data analysis, and
+            statistics. iyanju is a separate home for a personal interest:
+            exploring technology and building applications I want to use.
           </p>
           <p>
             For me, the Yoruba name carries a personal sense of encouragement
@@ -39,30 +34,44 @@ export default function About() {
             toward something useful.
           </p>
           <p>
-            AI helps me explore possibilities, work through design decisions,
-            and write code. I still choose what to build, review the result, and
-            take responsibility for the software I share.
+            Sometimes I want a tool that works my way. Before adding another
+            subscription, I explore whether I can build it. I enjoy learning how
+            software works, shaping a tool around a real need, and sharing it
+            for other people to try.
           </p>
           <p>
-            Kazi is the first tool in the collection: a place to organize work
-            for people, teams, and connected agents. I want the collection to
-            grow from real needs, one useful product at a time.
+            I build with assistance from AI. I direct the work, challenge its
+            proposals on decisions, architecture, security, and design, and ask
+            for improvements. I take responsibility for what I share.
+          </p>
+          <p>
+            For now, iyanju is a passion project. I’m here to learn, make useful
+            things, and let other people try them. Each application can find its
+            own direction as it matures.
           </p>
           <p className="signature">{site.operator.name}</p>
-          <span className="small">
-            Creator & operator · {site.operator.location}
-          </span>
+          <span className="small">{site.operator.location}</span>
         </div>
-        <EffortArt compact />
+        <aside className="maker-card" aria-labelledby="maker-projects-heading">
+          <Eyebrow>THE COLLECTION</Eyebrow>
+          <h2 id="maker-projects-heading">Room for the next idea.</h2>
+          <p>
+            I don’t limit iyanju to one field. I build applications around ideas
+            worth working on.
+          </p>
+          <Link href="/tools" className="text-link">
+            Explore the applications →
+          </Link>
+        </aside>
       </section>
       <section className="container about-principles">
         <Eyebrow>WHAT GUIDES THE WORK</Eyebrow>
         <div>
-          <h2>Useful before impressive.</h2>
+          <h2>Learn by building.</h2>
           <p>
-            Clear tools. Honest explanations. Deliberate connections. Software
-            should earn its place in your day by helping you do something that
-            matters.
+            Building an application is a way to understand how software works,
+            explore what AI can help me achieve, and turn curiosity into
+            something I can use and share.
           </p>
           <ButtonLink href="/tools">See what’s being built</ButtonLink>
         </div>

@@ -4,10 +4,9 @@ import { operatorClause, type LegalSection } from "@/content/privacy";
 import { site, emailLink } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
-  "Website terms draft",
-  "Draft information about using the iYanJu website, its independent operator, and separate tool terms.",
+  "Website terms",
+  "Terms for using the iyanju website, its application catalogue, and contact information.",
   "/terms",
-  true,
 );
 const sections: LegalSection[] = [
   {
@@ -17,9 +16,9 @@ const sections: LegalSection[] = [
       <>
         {operatorClause}
         <p>
-          This draft concerns the public catalogue and information at {site.url}
-          . It is prepared for review, has no effective date, and is not
-          presented as a finalized contract.
+          These terms apply to the public catalogue and information at{" "}
+          {site.url}. iyanju is a personal project: a home for applications
+          built out of curiosity and a wish to make useful tools.
         </p>
       </>
     ),
@@ -43,14 +42,14 @@ const sections: LegalSection[] = [
       <>
         <p>
           Links take you to independently operated product experiences within
-          the iYanJu collection. Each tool’s actual terms, privacy notice,
+          the iyanju collection. Each tool’s actual terms, privacy notice,
           access rules, and features should be reviewed there. This catalogue
           does not grant workspace membership, product entitlements, or
           permission to access another person’s data.
         </p>
         <p>
-          Descriptions reflect the available product source and may change.
-          Sign-in and workspace access are managed in Kazi. No pricing,
+          Descriptions reflect the current projects and may change. Sign-in and
+          workspace access are managed by each application. No pricing,
           availability guarantee, service-level commitment, or release timetable
           is created by the catalogue.
         </p>
@@ -63,17 +62,15 @@ const sections: LegalSection[] = [
     content: (
       <>
         <p>
-          The iYanJu identity and website content identify this independent
+          The iyanju identity and website content identify this independent
           initiative. Product names and assets belong to their respective
           owners. Linking to a tool or provider does not replace its own
           information or terms.
         </p>
         <p>
           Contact the operator if you believe information is inaccurate or
-          material should be corrected. The final terms need appropriate review
-          of content permissions and applicable consumer protections; this draft
-          does not attempt to exclude mandatory rights or impose an unreviewed
-          dispute clause.
+          material should be corrected. These terms do not limit any mandatory
+          rights or protections you have under applicable law.
         </p>
       </>
     ),
@@ -83,11 +80,11 @@ const sections: LegalSection[] = [
     title: "5. Privacy and accounts",
     content: (
       <p>
-        Read the <Link href="/privacy">website privacy draft</Link> for current
-        behavior and planned shared-identity boundaries. Shared account features
-        are disabled by default. A later identity service requires its own
-        confirmed practices and notice; deleting an identity profile is
-        different from deleting data held by each tool.
+        Read the <Link href="/privacy">privacy notice</Link> to understand how
+        this website handles information and the current availability of account
+        features. Each application manages its own data and permissions.
+        Deleting an identity profile is different from deleting information held
+        by an application.
       </p>
     ),
   },
@@ -97,17 +94,17 @@ const sections: LegalSection[] = [
     content: (
       <>
         <p>
-          Prepared {site.legalReviewDate}. A final version will identify its
-          effective date and communicate material changes where required. If the
-          operator later changes, actual ownership, service, data, and legal
-          arrangements need to be made and disclosed.
+          I may update these terms as the website changes. The date above shows
+          the latest version. Material changes will be communicated as required.
+          Any change of operator will be identified in the website’s
+          information.
         </p>
         <p>
           For website questions, email{" "}
-          <a href={emailLink("iYanJu website enquiry")}>
+          <a href={emailLink("iyanju website enquiry")}>
             {site.operator.email}
           </a>
-          . Operator: {site.operator.name}, {site.operator.location}.
+          .
         </p>
       </>
     ),
@@ -117,7 +114,7 @@ export default function Terms() {
   return (
     <LegalDocument
       title="Website terms."
-      intro="Draft information about the website, its independent operator, and how the catalogue relates to the tools it introduces."
+      intro="Information about using this website and how its catalogue relates to the applications it introduces."
       sections={sections}
     />
   );
