@@ -1,4 +1,5 @@
-import { PageIntro, Eyebrow, ButtonLink, EffortArt } from "@/components/ui";
+import { PageIntro, Eyebrow, ButtonLink } from "@/components/ui";
+import Link from "next/link";
 import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
@@ -9,25 +10,16 @@ export const metadata = pageMetadata(
 export default function About() {
   return (
     <>
-      <PageIntro
-        eyebrow="THE STORY BEHIND iyanju"
-        title={
-          <>
-            A little encouragement.
-            <br />
-            <em>A lot of possibility.</em>
-          </>
-        }
-      >
+      <PageIntro eyebrow="THE PERSON BEHIND iyanju" title="Hi, I’m Bolaji.">
         <p>
-          Software starts with an idea. Making it useful takes curiosity, care,
-          and the willingness to keep trying.
+          I build software for things I want to make useful. iyanju is a home
+          for these projects and the people who use them.
         </p>
       </PageIntro>
       <section className="container about-grid">
         <div className="about-letter">
-          <Eyebrow>FROM BOLAJI</Eyebrow>
-          <h2>Hi, I’m Bolaji.</h2>
+          <Eyebrow>WHY iyanju?</Eyebrow>
+          <h2>An idea, then the effort.</h2>
           <p>
             I created iyanju as a home for practical tools I build with the help
             of AI. It’s an independent project, and I’m the person who creates
@@ -54,7 +46,17 @@ export default function About() {
             Creator & operator · {site.operator.location}
           </span>
         </div>
-        <EffortArt compact />
+        <aside className="maker-card" aria-labelledby="maker-projects-heading">
+          <Eyebrow>THE COLLECTION</Eyebrow>
+          <h2 id="maker-projects-heading">Work. Music. What comes next.</h2>
+          <p>
+            Kazi, PlayKin, and iyanju Agentory come from different ideas. They
+            share a place here.
+          </p>
+          <Link href="/tools" className="text-link">
+            Explore the applications →
+          </Link>
+        </aside>
       </section>
       <section className="container about-principles">
         <Eyebrow>WHAT GUIDES THE WORK</Eyebrow>

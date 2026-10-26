@@ -5,10 +5,12 @@ import {
   Show,
   SignIn,
   SignUp,
+  UserButton,
   useClerk,
 } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { emailLink } from "@/content/site";
+import Link from "next/link";
 export function AccountControls({ signUp = false }: { signUp?: boolean }) {
   const [delayed, setDelayed] = useState(false);
   useEffect(() => {
@@ -68,11 +70,17 @@ function SignedInControls() {
   }
   return (
     <div className="account-panel">
-      <h2>Your identity is connected.</h2>
+      <UserButton />
+      <h2>You’re signed in to iyanju.</h2>
       <p>
-        This sign-in does not grant access to a Kazi workspace. Product
-        membership and permissions are checked by each tool. For product data or
-        whole-account removal, contact the operator and specify the scope.
+        Your account is ready. Each application manages its own data,
+        membership, and permissions. Existing application accounts are adopted
+        separately.
+      </p>
+      <p>
+        <Link href="/tools" className="text-link">
+          Explore the applications →
+        </Link>
       </p>
       <button className="button" onClick={leave} disabled={pending}>
         {pending ? "Signing out…" : "Sign out"}

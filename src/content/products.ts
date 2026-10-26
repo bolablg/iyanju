@@ -59,18 +59,46 @@ export const products: Product[] = [
 ];
 export const kazi = products[0];
 
-export const relatedProjects = [
+export type CollectionEntry = {
+  slug: string;
+  name: string;
+  description: string;
+  category: string;
+  tone: "violet" | "mint" | "ink";
+  url: string | null;
+  action: string;
+  detailsUrl?: string;
+};
+
+export const collection: CollectionEntry[] = [
   {
+    slug: kazi.slug,
+    name: kazi.name,
+    description:
+      "Work management for people, teams, and connected agents. Tasks, projects, sprints, timelines, and calendars.",
+    category: "Work management",
+    tone: "violet",
+    url: kazi.url,
+    action: "Open Kazi",
+    detailsUrl: "/tools/kazi",
+  },
+  {
+    slug: "playkin",
     name: "PlayKin",
     description:
       "A YouTube companion for playlist management and shared listening.",
-    status: "In development",
+    category: "In development",
+    tone: "mint",
     url: null,
+    action: "In development",
   },
   {
+    slug: "agentory",
     name: "iyanju Agentory",
     description: "Portable skills and integrations for AI assistants.",
-    status: "Public repository",
+    category: "Open source",
+    tone: "ink",
     url: "https://github.com/bolablg/skills",
+    action: "View repository",
   },
-] as const;
+];

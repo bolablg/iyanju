@@ -5,28 +5,20 @@ import { Footer } from "@/components/footer";
 import { site } from "@/content/site";
 import "./globals.css";
 const sans = localFont({
-  src: "../../public/fonts/dm-sans.woff2",
+  src: "../../public/fonts/plus-jakarta-sans.woff2",
   variable: "--font-sans",
   display: "swap",
-  weight: "100 900",
+  weight: "400 800",
   fallback: ["Arial"],
 });
-const serif = localFont({
-  src: "../../public/fonts/instrument-serif-italic.woff2",
-  variable: "--font-serif",
-  display: "swap",
-  weight: "400",
-  style: "italic",
-  fallback: ["Georgia"],
-});
 export const viewport: Viewport = {
-  themeColor: "#f7f5ee",
+  themeColor: "#faf6ee",
   colorScheme: "light",
 };
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "iyanju — Good ideas. Put to work.",
+    default: "iyanju — Make good things happen.",
     template: "%s · iyanju",
   },
   description: site.description,
@@ -35,7 +27,7 @@ export const metadata: Metadata = {
     type: "website",
     siteName: site.name,
     locale: "en_US",
-    title: "iyanju — Good ideas. Put to work.",
+    title: "iyanju — Make good things happen.",
     description: site.description,
     url: site.url,
     images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
@@ -47,7 +39,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${serif.variable}`}>
+    <html lang="en" className={sans.variable}>
       <body>
         <a className="skip-link" href="#main">
           Skip to content

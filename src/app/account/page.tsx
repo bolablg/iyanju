@@ -2,7 +2,7 @@ import { AccountPage } from "@/components/account-page";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
   "Your account",
-  "The path to a shared iyanju identity, with separate access and permissions for every tool.",
+  "Sign in to iyanju. Each application manages its own data and permissions.",
   "/account",
   true,
 );

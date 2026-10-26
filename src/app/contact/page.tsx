@@ -12,16 +12,7 @@ export const metadata = pageMetadata(
 export default function Contact() {
   return (
     <>
-      <PageIntro
-        eyebrow="A DIRECT LINE"
-        title={
-          <>
-            Good things start
-            <br />
-            with <em>a conversation.</em>
-          </>
-        }
-      >
+      <PageIntro eyebrow="A DIRECT LINE" title="Let’s talk.">
         <p>
           A question about a tool, a thoughtful bit of feedback, or a problem
           worth solving. I’d like to hear it.

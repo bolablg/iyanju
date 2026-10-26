@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { site, emailLink } from "./site";
 import { kazi } from "./products";
+import { identityConfig } from "@/lib/identity-config";
+const accountsEnabled = identityConfig(process.env).enabled;
 export type LegalSection = { id: string; title: string; content: ReactNode };
 
 // Common operator/support clauses are reusable; product-specific processing belongs in each tool's complete notice.
@@ -36,11 +38,9 @@ export const privacySections: LegalSection[] = [
         {operatorClause}
         <p>
           This draft covers <strong>{site.url}</strong>, related enquiries, and
-          the account boundary implemented here. It describes the local
-          implementation and proposed hosting arrangements. It has no effective
-          date. Hosting settings, provider contracts, retention, international
-          arrangements, and account adoption need confirmation before a final
-          notice is issued.
+          account features. The website uses Vercel hosting and Cloudflare DNS.
+          This remains a draft without an effective date while the operator
+          completes the wider policy and provider review.
         </p>
       </>
     ),
@@ -83,8 +83,8 @@ export const privacySections: LegalSection[] = [
             contact form, analytics collection endpoint, or advertising system.
             A local or deployed web server necessarily handles requests, which
             can include an IP address, requested path, time, and
-            browser/connection information. Actual host log settings and
-            schedules must be confirmed before deployment.
+            browser/connection information. Hosting and security providers may
+            keep operational records under their own schedules.
           </li>
           <li>
             <strong>Contact:</strong> if you email the operator, your email
@@ -138,27 +138,29 @@ export const privacySections: LegalSection[] = [
     content: (
       <>
         <p>
-          <strong>
-            Default state: shared accounts are not enabled on this website.
-          </strong>{" "}
-          Public pages do not initialize Clerk, fetch a user profile, or require
-          login. Existing Kazi accounts continue to be managed by Kazi.
+          {accountsEnabled
+            ? "Clerk provides iyanju account registration and sign-in at /account."
+            : "Account registration and sign-in are not enabled in this environment."}{" "}
+          Public pages do not initialize Clerk or fetch a user profile. Existing
+          Kazi accounts continue to be managed by Kazi until that application
+          adopts the shared identity.
         </p>
         <p>
-          An isolated optional Clerk integration is prepared at /account. It
-          must be explicitly configured before use. If enabled, Clerk would
-          process identity information such as account identifiers, contact
-          details, sign-in methods, session information, and security records,
-          depending on the chosen setup. A final account notice must specify the
-          enabled methods, sources, recipients, retention, and applicable
-          grounds before activation.
+          When you use an account, Clerk processes your email address, username,
+          password credentials, optional profile name, verification information,
+          account ID, session cookies, device and connection details, and
+          security records to create the account, authenticate you, and help
+          prevent misuse. Production sign-in uses email or username and
+          password, with email verification; supported email-code flows may also
+          be offered. Google and GitHub sign-in are not configured for
+          production.
         </p>
         <p>
-          The intended shared identity could let approved tools recognize the
-          same account ID and basic identity information needed for sign-in.
-          Each tool would still manage its own onboarding, memberships, roles,
-          and data. No production migration or shared user directory is
-          established by this build.
+          Participating applications can recognize the same identity while
+          managing their own onboarding, memberships, roles, and data. Creating
+          an iyanju account does not migrate an existing application account or
+          grant workspace access. Account profiles remain with Clerk until
+          removed, subject to security, legal, and provider retention needs.
         </p>
         <p>
           Removing access or data for one tool is different from deleting the
@@ -176,11 +178,10 @@ export const privacySections: LegalSection[] = [
     content: (
       <>
         <p>
-          Locally, requests are served by the local development server. Vercel
-          is the prepared hosting option, rather than a confirmed live
-          deployment of this site. The supplied contact address uses Gmail;
-          sending mail also involves your own email provider. Clerk is an
-          optional identity provider only when accounts are explicitly enabled.
+          Vercel hosts the website and Cloudflare manages its DNS. Local
+          development uses a local server. The contact address uses Gmail;
+          sending mail also involves your own email provider. Clerk provides the
+          account service when enabled.
         </p>
         <p>
           This public site does not use Convex, Resend, a calendar API, or an AI
@@ -203,12 +204,12 @@ export const privacySections: LegalSection[] = [
           <a href="https://vercel.com/legal/privacy-policy">
             Vercel’s privacy information
           </a>{" "}
-          if deployed there, and{" "}
+          and{" "}
           <a href="https://clerk.com/legal/privacy">
             Clerk’s privacy information
           </a>{" "}
-          if accounts are activated. Provider contracts and region settings also
-          require review.
+          for the account service. Provider contracts and region settings remain
+          part of the operator’s policy review.
         </p>
       </>
     ),
@@ -219,8 +220,9 @@ export const privacySections: LegalSection[] = [
     content: (
       <>
         <p>
-          The public site sets no application cookies or local-storage
-          identifiers in its default configuration. The mobile menu and
+          The public pages do not initialize account storage. Signing in uses
+          Clerk’s necessary authentication and session cookies, which may be
+          present on subsequent visits to the website. The mobile menu and
           copy-email feedback use temporary in-memory state. Your browser may
           cache pages, fonts, and assets. Copying the email address writes to
           your clipboard only after you select that action.
@@ -234,11 +236,11 @@ export const privacySections: LegalSection[] = [
         </p>
         <p>
           Host/security records are separate from optional analytics and must be
-          assessed with the deployed service. If accounts are enabled, Clerk
-          uses functional identity/session mechanisms that need an updated
-          disclosure. Any future optional analytics requires purpose limits,
-          applicable consent and opt-outs, objection handling, and required
-          preference-signal handling before collection starts.
+          assessed with the deployed service. Clerk’s functional storage
+          supports sign-in and session security. Any future optional analytics
+          requires purpose limits, applicable consent and opt-outs, objection
+          handling, and required preference-signal handling before collection
+          starts.
         </p>
         <p>
           AI assistance in writing this software does not mean your browsing or
@@ -262,11 +264,9 @@ export const privacySections: LegalSection[] = [
           deadline or verified backup-erasure period is promised.
         </p>
         <p>
-          Proposed future analytics limits of at most 30 days for dedicated raw
-          events and up to 12 months for genuinely anonymous aggregates are
-          planning targets only. No such pipeline is enabled. Pseudonymous
-          identifiers are still personal information where people can be
-          identified.
+          There is no optional analytics pipeline. Account and support records
+          are personal information and are handled separately from any future
+          anonymous statistics.
         </p>
         <p>
           Tool records follow each product’s own notice and the applicable
@@ -295,9 +295,9 @@ export const privacySections: LegalSection[] = [
           and identity when enabled may involve processing in the United States
           and other provider locations, where laws differ. Actual regions,
           subprocessors, agreements, and any required transfer mechanism must be
-          verified before this notice is made effective or account processing
-          begins. No EU-only hosting, adequacy certification, appointed
-          representative, or established transfer safeguard is asserted.
+          verified before this notice is made effective. No EU-only hosting,
+          adequacy certification, appointed representative, or established
+          transfer safeguard is asserted.
         </p>
         <p>
           Where law requires a transfer arrangement or incident notification,

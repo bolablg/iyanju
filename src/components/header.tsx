@@ -62,7 +62,7 @@ export function Header() {
             onClick={close}
             aria-current={path.startsWith("/account") ? "page" : undefined}
           >
-            Your account <Arrow diagonal />
+            Sign in <Arrow diagonal />
           </Link>
         </nav>
       </div>
