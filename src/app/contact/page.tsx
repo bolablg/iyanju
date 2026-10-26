@@ -6,7 +6,7 @@ import { site, emailLink } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
   "Get in touch",
-  "Questions, feedback, or a problem worth solving? Contact Bolaji BALOGOUN, the creator and operator of iyanju.",
+  "Questions, feedback, or a problem worth solving? Get in touch with iyanju’s creator and operator.",
   "/contact",
 );
 export default function Contact() {
@@ -20,7 +20,7 @@ export default function Contact() {
       </PageIntro>
       <section className="container contact-grid">
         <div className="contact-email">
-          <Eyebrow>WRITE TO BOLAJI</Eyebrow>
+          <Eyebrow>GET IN TOUCH</Eyebrow>
           <a className="email-address" href={emailLink("Hello iyanju")}>
             {site.operator.email}
             <Arrow diagonal />

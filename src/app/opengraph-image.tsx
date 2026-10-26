@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 import { site } from "@/content/site";
-export const alt = `${site.name} — Make good things happen. Independent applications by ${site.operator.name}.`;
+export const alt = `${site.name} — Make good things happen. Independent applications, built with assistance from AI.`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export default function Image() {
@@ -65,7 +65,7 @@ export default function Image() {
           color: "#59565d",
         }}
       >
-        <span>Independent applications by {site.operator.name}</span>
+        <span>Curiosity, care, and assistance from AI.</span>
         <span>{new URL(site.url).hostname}</span>
       </div>
     </div>,

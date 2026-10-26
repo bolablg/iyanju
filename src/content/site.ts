@@ -2,7 +2,7 @@ export const site = {
   name: "iyanju",
   url: "https://iyanju.com",
   description:
-    "Independent applications created and operated by Bolaji BALOGOUN with curiosity, care, and assistance from AI.",
+    "Independent applications created with curiosity, care, and assistance from AI.",
   operator: {
     name: "Bolaji BALOGOUN",
     location: "Arkansas 72223, United States",

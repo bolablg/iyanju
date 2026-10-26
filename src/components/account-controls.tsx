@@ -29,7 +29,7 @@ export function AccountControls({ signUp = false }: { signUp?: boolean }) {
                 className="text-link"
                 href={emailLink("Account connection help")}
               >
-                Contact Bolaji
+                Get in touch
               </a>
             </>
           ) : (

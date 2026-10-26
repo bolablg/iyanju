@@ -24,8 +24,4 @@ The platform uses **Next.js, React, and TypeScript** for the public website and 
 
 **Vercel** is the production hosting platform, with **Cloudflare** managing the domain's DNS. The public catalogue has no application database or third-party analytics SDK.
 
-## About
-
-Created and operated independently by **Bolaji BALOGOUN**.
-
 [Website](https://iyanju.com) · [Contact](mailto:bolajibalogoun@gmail.com)

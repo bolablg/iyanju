@@ -29,10 +29,7 @@ export function Footer() {
           </nav>
         </div>
         <div className="footer-meta">
-          <p>
-            Created and operated by {site.operator.name}. Built with assistance
-            from AI.
-          </p>
+          <p>Built with curiosity, care, and assistance from AI.</p>
           <span className="copyright">© 2026 {site.name}</span>
         </div>
       </div>

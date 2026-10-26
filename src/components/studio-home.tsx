@@ -3,7 +3,6 @@ import { ApplicationGrid } from "./application-grid";
 import { Arrow } from "./brand";
 import { ButtonLink, Eyebrow } from "./ui";
 import { collection } from "@/content/products";
-import { site } from "@/content/site";
 
 export function StudioHome() {
   return (
@@ -14,8 +13,8 @@ export function StudioHome() {
           <div>
             <h1 id="home-heading">Make good things happen.</h1>
             <p>
-              Practical software for the things you want to get done. Created by{" "}
-              {site.operator.name} with curiosity, care, and assistance from AI.
+              Practical software for the things you want to get done. Created
+              with curiosity, care, and assistance from AI.
             </p>
           </div>
           <ButtonLink href="#applications" secondary>
@@ -54,7 +53,7 @@ export function StudioHome() {
           process.
         </p>
         <Link className="maker-signature text-link" href="/about">
-          {site.operator.name} <Arrow />
+          More about iyanju <Arrow />
         </Link>
       </section>
       <section
