@@ -1,10 +1,10 @@
 # iyanju
 
-**Independent applications for work, music, and everyday projects.**
+**Independent applications, created with curiosity, care, and assistance from AI.**
 
 iyanju is a collection of practical software created and operated by **Bolaji BALOGOUN**. It brings applications with different purposes together under one home, with a shared emphasis on useful features, clear choices, and thoughtful design.
 
-For Bolaji, the name carries a personal sense of encouragement and effort: taking an idea, working through it, and making something people can use. AI helps with research, design, and development. Each application's own features and privacy information explain whether and how it uses AI at runtime.
+For Bolaji, the name carries a personal sense of encouragement and effort: taking an idea, putting in the effort, and making something useful. He builds with assistance from AI and challenges its proposals on decisions, architecture, security, and design. The collection is not limited to a particular field. Each application's own features and privacy information explain whether and how it uses AI at runtime.
 
 ## The collection
 

@@ -1,7 +1,7 @@
 {
   "name": "iyanju",
   "version": "0.1.0",
-  "description": "Independent applications for work, music, and everyday projects by Bolaji BALOGOUN.",
+  "description": "Independent applications created by Bolaji BALOGOUN with assistance from AI.",
   "private": true,
   "type": "module",
   "scripts": {

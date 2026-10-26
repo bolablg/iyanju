@@ -7,8 +7,8 @@ export function StudioCatalogue() {
     <>
       <PageIntro eyebrow="The collection" title="Different projects. One home.">
         <p>
-          Applications for work, music, and everyday projects. Each has its own
-          purpose, data, and permissions.
+          Applications created around real ideas. Each has its own purpose,
+          data, and permissions.
         </p>
       </PageIntro>
       <section

@@ -10,7 +10,11 @@ export function Footer() {
             <Link href="/" aria-label="iyanju home">
               <Wordmark />
             </Link>
-            <p>Independent applications.</p>
+            <p>
+              A little effort.
+              <br />
+              Something useful.
+            </p>
           </div>
           <nav aria-label="Footer navigation">
             <Link href="/tools">Applications</Link>
@@ -25,7 +29,10 @@ export function Footer() {
           </nav>
         </div>
         <div className="footer-meta">
-          <p>Created and operated by {site.operator.name}.</p>
+          <p>
+            Created and operated by {site.operator.name}. Built with assistance
+            from AI.
+          </p>
           <span className="copyright">© 2026 {site.name}</span>
         </div>
       </div>

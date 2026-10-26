@@ -21,9 +21,9 @@ export default function About() {
           <Eyebrow>WHY iyanju?</Eyebrow>
           <h2>An idea, then the effort.</h2>
           <p>
-            I created iyanju as a home for practical tools I build with the help
-            of AI. It’s an independent project, and I’m the person who creates
-            and operates it.
+            I created iyanju as a home for practical tools I build with
+            assistance from AI. It’s an independent project, and I’m the person
+            who creates and operates it.
           </p>
           <p>
             For me, the Yoruba name carries a personal sense of encouragement
@@ -31,15 +31,10 @@ export default function About() {
             toward something useful.
           </p>
           <p>
-            AI helps me explore possibilities, work through design decisions,
-            and write code. I still choose what to build, review the result, and
-            take responsibility for the software I share.
-          </p>
-          <p>
-            The collection includes Kazi for organizing work, PlayKin for
-            playlists and shared listening, and iyanju Agentory for portable AI
-            assistant skills. Each has its own purpose and develops at its own
-            pace.
+            AI assists me in exploring possibilities, making decisions, and
+            writing code. I challenge its work on architecture, security, and
+            design, ask for improvements, and take responsibility for the
+            software I share.
           </p>
           <p className="signature">{site.operator.name}</p>
           <span className="small">
@@ -48,10 +43,10 @@ export default function About() {
         </div>
         <aside className="maker-card" aria-labelledby="maker-projects-heading">
           <Eyebrow>THE COLLECTION</Eyebrow>
-          <h2 id="maker-projects-heading">Work. Music. What comes next.</h2>
+          <h2 id="maker-projects-heading">Room for the next idea.</h2>
           <p>
-            Kazi, PlayKin, and iyanju Agentory come from different ideas. They
-            share a place here.
+            I don’t limit iyanju to one field. I build applications around ideas
+            worth working on.
           </p>
           <Link href="/tools" className="text-link">
             Explore the applications →

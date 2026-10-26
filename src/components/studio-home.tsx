@@ -14,8 +14,8 @@ export function StudioHome() {
           <div>
             <h1 id="home-heading">Make good things happen.</h1>
             <p>
-              Independent applications for work, music, and everyday projects,
-              created by {site.operator.name}.
+              Practical software for the things you want to get done. Created by{" "}
+              {site.operator.name} with curiosity, care, and assistance from AI.
             </p>
           </div>
           <ButtonLink href="#applications" secondary>
@@ -43,13 +43,15 @@ export function StudioHome() {
         <h2 className="eyebrow" id="maker-heading">
           <span aria-hidden="true" />A note from the maker
         </h2>
+        <blockquote>
+          “For me, iyanju is a reminder to keep trying. To take an idea, put in
+          the effort, and make something useful.”
+        </blockquote>
         <p>
-          I’m Bolaji BALOGOUN. I build practical software with the help of AI.
-          iyanju is where these applications come together.
-        </p>
-        <p>
-          Each application has its own purpose, permissions, and data. The
-          collection grows from real projects and everyday needs.
+          I build with assistance from AI. I challenge its proposals on
+          decisions, architecture, security, and design, and ask it to improve
+          the work. iyanju is a home for the applications that come from that
+          process.
         </p>
         <Link className="maker-signature text-link" href="/about">
           {site.operator.name} <Arrow />

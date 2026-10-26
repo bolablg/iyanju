@@ -459,6 +459,14 @@ main:focus {
   line-height: 1.9;
   color: #454248;
 }
+.maker-note > blockquote {
+  max-width: 860px;
+  margin: 16px 0 0;
+  font-size: 19px;
+  line-height: 1.7;
+  font-weight: 600;
+  color: var(--ink);
+}
 .maker-signature {
   margin-top: 14px;
   font: 700 11px/1.5 var(--mono);
