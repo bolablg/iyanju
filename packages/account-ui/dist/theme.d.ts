@@ -6,12 +6,12 @@ export declare const accountTheme: {
         readonly colorText: "#18181b";
         readonly colorTextSecondary: "#59565d";
         readonly fontFamily: "\"iYANJU Account\", sans-serif";
-        readonly borderRadius: "0";
+        readonly borderRadius: "12px";
     };
     readonly elements: {
         readonly card: {
             readonly boxShadow: "none";
-            readonly border: "2px solid #18181b";
+            readonly border: "1px solid #e3dfd6";
         };
         readonly cardBox: {
             readonly boxShadow: "none";

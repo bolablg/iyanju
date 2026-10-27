@@ -1,6 +1,6 @@
 {
   "name": "@iyanju/account-ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The shared iYANJU account surface for independent applications.",
   "type": "module",
   "license": "UNLICENSED",

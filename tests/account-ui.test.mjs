@@ -72,7 +72,7 @@ test("appearance and bundled font never depend on the host's font or a remote fo
     accountTheme.variables.fontFamily,
     '"iYANJU Account", sans-serif',
   );
-  assert.equal(accountTheme.variables.borderRadius, "0");
+  assert.equal(accountTheme.variables.borderRadius, "12px");
   const css = await readFile(
     new URL("../packages/account-ui/dist/styles.css", import.meta.url),
     "utf8",
