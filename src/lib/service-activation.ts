@@ -16,6 +16,7 @@ export type ServiceActivationSettings = {
   issuer: string;
   rootOrigin: string;
   kaziEndpoint: string;
+  wlanEndpoint: string;
 };
 
 /** Fixed reviewed tuples, not destinations selected by a request or user profile. */
@@ -53,6 +54,9 @@ export function serviceActivationSettings(
     kaziEndpoint: production
       ? "https://kazi.iyanju.com/api/account/service-activation"
       : "http://127.0.0.1:5192/api/account/service-activation",
+    wlanEndpoint: production
+      ? "https://wlan.iyanju.com/api/account/service-activation"
+      : "http://127.0.0.1:49570/api/account/service-activation",
   };
 }
 
@@ -102,16 +106,17 @@ export function validRootServiceSession(
   );
 }
 
-export function parseKaziActivation(
+export function parseServiceActivation(
   value: unknown,
   environment: ServiceActivationSettings["environment"],
+  serviceId: "kazi" | "wlan",
 ): ActivationDates | null | undefined {
   if (!value || typeof value !== "object" || Array.isArray(value))
     return undefined;
   const record = value as Record<string, unknown>;
   if (
     record.version !== 1 ||
-    record.serviceId !== "kazi" ||
+    record.serviceId !== serviceId ||
     record.environment !== environment ||
     Object.keys(record).some(
       (key) =>
@@ -141,6 +146,13 @@ export function parseKaziActivation(
     activatedAt: dates.activatedAt,
     firstObservedAt: dates.firstObservedAt,
   };
+}
+
+export function parseKaziActivation(
+  value: unknown,
+  environment: ServiceActivationSettings["environment"],
+) {
+  return parseServiceActivation(value, environment, "kazi");
 }
 
 async function readSummary(response: Response) {
@@ -234,37 +246,48 @@ export function createAccountServicesHandler(
       return failure(503);
     }
     if (!validRootServiceSession(session, settings)) return failure(401);
-    const kazi: AccountService = { serviceId: "kazi", state: "unavailable" };
-    try {
-      const response = await fetchService(settings.kaziEndpoint, {
-        method: "GET",
-        headers: { Authorization: authorization, Accept: "application/json" },
-        credentials: "omit",
-        cache: "no-store",
-        redirect: "manual",
-        signal: AbortSignal.any([request.signal, AbortSignal.timeout(3000)]),
-      });
-      if (response.status === 200) {
-        const activation = parseKaziActivation(
-          await readSummary(response),
-          settings.environment,
-        );
-        if (activation === null) kazi.state = "not_activated";
-        else if (activation !== undefined) {
-          kazi.state = "activated";
-          kazi.activation = activation;
-        }
-      } else await response.body?.cancel();
-    } catch {
-      /* Failed lookups remain unavailable; never imply nonactivation. */
-    }
+    const lookUp = async (
+      serviceId: "kazi" | "wlan",
+      endpoint: string,
+    ): Promise<AccountService> => {
+      const service: AccountService = { serviceId, state: "unavailable" };
+      try {
+        const response = await fetchService(endpoint, {
+          method: "GET",
+          headers: { Authorization: authorization, Accept: "application/json" },
+          credentials: "omit",
+          cache: "no-store",
+          redirect: "manual",
+          signal: AbortSignal.any([request.signal, AbortSignal.timeout(3000)]),
+        });
+        if (response.status === 200) {
+          const activation = parseServiceActivation(
+            await readSummary(response),
+            settings.environment,
+            serviceId,
+          );
+          if (activation === null) service.state = "not_activated";
+          else if (activation !== undefined) {
+            service.state = "activated";
+            service.activation = activation;
+          }
+        } else await response.body?.cancel();
+      } catch {
+        // Failed lookups remain unavailable, independent of the other product.
+      }
+      return service;
+    };
+    const [kazi, wlan] = await Promise.all([
+      lookUp("kazi", settings.kaziEndpoint),
+      lookUp("wlan", settings.wlanEndpoint),
+    ]);
     return Response.json(
       {
         version: 1,
         services: [
           kazi,
-          // No JWT is forwarded until each product releases a dedicated contract.
-          { serviceId: "wlan", state: "unavailable" },
+          wlan,
+          // No JWT is forwarded until this product releases a dedicated contract.
           { serviceId: "playkin", state: "unavailable" },
         ],
       } satisfies AccountServices,

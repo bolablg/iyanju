@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   createAccountServicesHandler,
   parseKaziActivation,
+  parseServiceActivation,
   serviceActivationSettings,
   validRootServiceSession,
   type ServiceActivationSettings,
@@ -12,6 +13,7 @@ const settings: ServiceActivationSettings = {
   issuer: "https://clerk.iyanju.com",
   rootOrigin: "https://iyanju.com",
   kaziEndpoint: "https://kazi.iyanju.com/api/account/service-activation",
+  wlanEndpoint: "https://wlan.iyanju.com/api/account/service-activation",
 };
 const now = Date.now();
 const session = {
@@ -60,6 +62,7 @@ test("service lookup settings select only the reviewed production/development tu
     issuer: "https://funky-monitor-8635.clerk.accounts.dev",
     rootOrigin: "http://127.0.0.1:49569",
     kaziEndpoint: "http://127.0.0.1:5192/api/account/service-activation",
+    wlanEndpoint: "http://127.0.0.1:49570/api/account/service-activation",
   });
   assert.equal(serviceActivationSettings({}), null);
   assert.equal(
@@ -128,7 +131,8 @@ test("verifies and forwards the same bearer without cookies or user-controlled d
       { serviceId: "playkin", state: "unavailable" },
     ],
   });
-  assert.equal(calls.length, 1);
+  assert.equal(calls.length, 2);
+  assert.equal(calls[1][0], settings.wlanEndpoint);
   assert.equal(calls[0][0], settings.kaziEndpoint);
   assert.deepEqual(Object.fromEntries(new Headers(calls[0][1]?.headers)), {
     accept: "application/json",
@@ -154,13 +158,17 @@ test("authoritative null alone means not activated; errors and unsupported produ
     const isNull =
       fixture.status === 200 &&
       (await fixture.clone().json()).activation === null;
+    const responseBody = await fixture.clone().text();
     let calls = 0;
     const response = await createAccountServicesHandler(
       settings,
       async () => session,
       async () => {
         calls++;
-        return fixture;
+        return new Response(responseBody, {
+          status: fixture.status,
+          headers: fixture.headers,
+        });
       },
     )(request());
     const result = await response.json();
@@ -170,7 +178,7 @@ test("authoritative null alone means not activated; errors and unsupported produ
     );
     assert.equal(result.services[1].state, "unavailable");
     assert.equal(result.services[2].state, "unavailable");
-    assert.equal(calls, 1);
+    assert.equal(calls, 2);
   }
 });
 test("rejects selectors, missing auth, invalid sessions and verifier failures before product calls", async () => {
@@ -278,4 +286,56 @@ test("cancels the product lookup with the request and preserves unavailable sema
   controller.abort();
   const response = await pending;
   assert.equal((await response.json()).services[0].state, "unavailable");
+});
+
+test("Wlan receives only the root bearer and its minimal contract is isolated from other services", async () => {
+  const calls: [string, RequestInit | undefined][] = [];
+  const result = await createAccountServicesHandler(
+    settings,
+    async () => session,
+    async (url, init) => {
+      calls.push([String(url), init]);
+      return String(url) === settings.wlanEndpoint
+        ? Response.json({ ...summary, serviceId: "wlan" })
+        : new Response(null, { status: 503 });
+    },
+  )(request());
+  assert.deepEqual((await result.json()).services, [
+    { serviceId: "kazi", state: "unavailable" },
+    { serviceId: "wlan", state: "activated", activation: summary.activation },
+    { serviceId: "playkin", state: "unavailable" },
+  ]);
+  const call = calls.find(([url]) => url === settings.wlanEndpoint)!;
+  assert.deepEqual(Object.fromEntries(new Headers(call[1]?.headers)), {
+    accept: "application/json",
+    authorization: "Bearer synthetic.payload.signature",
+  });
+  assert.equal(call[1]?.credentials, "omit");
+  assert.equal(call[1]?.redirect, "manual");
+  assert.equal(
+    parseServiceActivation(summary, "production", "wlan"),
+    undefined,
+  );
+  assert.deepEqual(
+    parseServiceActivation(
+      { ...summary, serviceId: "wlan" },
+      "production",
+      "wlan",
+    ),
+    summary.activation,
+  );
+});
+
+test("a confirmed unactivated Wlan account does not become activated by an overview read", async () => {
+  const result = await createAccountServicesHandler(
+    settings,
+    async () => session,
+    async (url) =>
+      Response.json({
+        ...summary,
+        serviceId: String(url) === settings.wlanEndpoint ? "wlan" : "kazi",
+        activation: null,
+      }),
+  )(request());
+  assert.equal((await result.json()).services[1].state, "not_activated");
 });
