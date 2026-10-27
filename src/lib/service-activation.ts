@@ -1,4 +1,9 @@
 import { identityConfig } from "./identity-config.ts";
+import {
+  authoritativeServiceAccess,
+  permitsService,
+  serviceIds,
+} from "./service-access.ts";
 
 export type ServiceId = "kazi" | "wlan" | "playkin";
 export type ActivationDates = {
@@ -7,7 +12,7 @@ export type ActivationDates = {
 };
 export type AccountService = {
   serviceId: ServiceId;
-  state: "activated" | "not_activated" | "unavailable";
+  state: "activated" | "not_activated" | "unavailable" | "restricted";
   activation?: ActivationDates;
 };
 export type AccountServices = { version: 1; services: AccountService[] };
@@ -194,10 +199,13 @@ type Authenticate = (
   request: Request,
   settings: ServiceActivationSettings,
 ) => Promise<VerifiedRootSession>;
-export function createAccountServicesHandler(
+export type LoadDirectoryUser = (subject: string) => Promise<unknown>;
+function createAccountHandler(
   settings: ServiceActivationSettings | null,
   authenticate: Authenticate,
+  loadDirectoryUser: LoadDirectoryUser,
   fetchService: typeof fetch = fetch,
+  mode: "services" | "access" = "services",
 ) {
   const failure = (status: number) =>
     Response.json(
@@ -219,7 +227,7 @@ export function createAccountServicesHandler(
     const url = new URL(request.url);
     if (
       url.origin !== settings.rootOrigin ||
-      url.pathname !== "/account/services" ||
+      url.pathname !== `/account/${mode}` ||
       url.search
     )
       return failure(400);
@@ -237,7 +245,7 @@ export function createAccountServicesHandler(
       // Clerk ordinarily prefers a cookie over the Authorization header. Verify
       // a header-only request so the exact forwarded JWT selects this account.
       session = await authenticate(
-        new Request(settings.rootOrigin + "/account/services", {
+        new Request(settings.rootOrigin + `/account/${mode}`, {
           headers: { Authorization: authorization },
         }),
         settings,
@@ -246,10 +254,30 @@ export function createAccountServicesHandler(
       return failure(503);
     }
     if (!validRootServiceSession(session, settings)) return failure(401);
+    let access;
+    try {
+      access = authoritativeServiceAccess(
+        await loadDirectoryUser(session.userId!),
+        session.userId!,
+      );
+    } catch {
+      return failure(503);
+    }
+    if (access.kind === "invalid") return failure(403);
+    if (mode === "access")
+      return Response.json(
+        {
+          version: 1,
+          services: serviceIds.filter((id) => permitsService(access, id)),
+        },
+        { headers: accountServicesHeaders },
+      );
     const lookUp = async (
       serviceId: "kazi" | "wlan",
       endpoint: string,
     ): Promise<AccountService> => {
+      if (!permitsService(access, serviceId))
+        return { serviceId, state: "restricted" };
       const service: AccountService = { serviceId, state: "unavailable" };
       try {
         const response = await fetchService(endpoint, {
@@ -288,10 +316,43 @@ export function createAccountServicesHandler(
           kazi,
           wlan,
           // No JWT is forwarded until this product releases a dedicated contract.
-          { serviceId: "playkin", state: "unavailable" },
+          {
+            serviceId: "playkin",
+            state: permitsService(access, "playkin")
+              ? "unavailable"
+              : "restricted",
+          },
         ],
       } satisfies AccountServices,
       { headers: accountServicesHeaders },
     );
   };
+}
+
+export function createAccountServicesHandler(
+  settings: ServiceActivationSettings | null,
+  authenticate: Authenticate,
+  loadDirectoryUser: LoadDirectoryUser,
+  fetchService: typeof fetch = fetch,
+) {
+  return createAccountHandler(
+    settings,
+    authenticate,
+    loadDirectoryUser,
+    fetchService,
+  );
+}
+
+export function createAccountAccessHandler(
+  settings: ServiceActivationSettings | null,
+  authenticate: Authenticate,
+  loadDirectoryUser: LoadDirectoryUser,
+) {
+  return createAccountHandler(
+    settings,
+    authenticate,
+    loadDirectoryUser,
+    fetch,
+    "access",
+  );
 }

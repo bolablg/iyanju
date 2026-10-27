@@ -119,3 +119,17 @@ test("only default session audiences for Convex enable the private service reque
   ])
     assert.equal(hasConvexAudience(audience), false);
 });
+
+test("restricted services remain distinct from unavailable and never become activated", () => {
+  const services = summary.services.map((service) =>
+    service.serviceId === "wlan"
+      ? service
+      : { serviceId: service.serviceId, state: "restricted" },
+  );
+  const result = parseAccountServices({ version: 1, services });
+  assert.deepEqual(result, { version: 1, services });
+  assert.equal(
+    result?.services.some((service) => service.state === "activated"),
+    false,
+  );
+});

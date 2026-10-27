@@ -160,6 +160,15 @@ function AccountServices({ userId }: { userId: string }) {
   const partial =
     state.kind === "ready" &&
     state.summary.services.some((service) => service.state === "unavailable");
+  const restricted =
+    state.kind === "ready" &&
+    state.summary.services.some((service) => service.state === "restricted");
+  const permitted =
+    state.kind === "ready"
+      ? state.summary.services.filter(
+          (service) => service.state !== "restricted",
+        )
+      : [];
   return (
     <section
       className="account-services"
@@ -167,10 +176,21 @@ function AccountServices({ userId }: { userId: string }) {
     >
       <div className="account-section-heading">
         <h2 id="account-services-title">Your services</h2>
-        <Link href="/tools" className="text-link">
-          Browse applications <Arrow />
-        </Link>
+        {state.kind === "ready" && !restricted && (
+          <Link href="/tools" className="text-link">
+            Browse applications <Arrow />
+          </Link>
+        )}
       </div>
+      {restricted && (
+        <p className="account-profile-note">
+          This account has access to{" "}
+          {permitted
+            .map((service) => accountServiceDisplay[service.serviceId].name)
+            .join(", ")}
+          . Each application manages its own permissions.
+        </p>
+      )}
       {state.kind === "loading" && (
         <p className="account-service-state" role="status">
           Checking your services…
@@ -244,7 +264,26 @@ function AccountServices({ userId }: { userId: string }) {
           {activated.length === 0 && !partial && (
             <div className="account-service-state">
               <h3>No activated services yet.</h3>
-              <p>Explore the applications to get started.</p>
+              <p>
+                {restricted
+                  ? "Open your allowed application to get started."
+                  : "Explore the applications to get started."}
+              </p>
+              {restricted &&
+                permitted.map((service) => {
+                  const openUrl = accountServiceOpenUrl(
+                    service.serviceId,
+                    window.location.origin,
+                  );
+                  return openUrl ? (
+                    <p key={service.serviceId}>
+                      <a className="text-link" href={openUrl}>
+                        Open {accountServiceDisplay[service.serviceId].name}{" "}
+                        <Arrow diagonal />
+                      </a>
+                    </p>
+                  ) : null;
+                })}
             </div>
           )}
         </>

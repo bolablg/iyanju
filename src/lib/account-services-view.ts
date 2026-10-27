@@ -12,7 +12,10 @@ export type AccountService =
       state: "activated";
       activation: ServiceActivation;
     }
-  | { serviceId: AccountServiceId; state: "not_activated" | "unavailable" };
+  | {
+      serviceId: AccountServiceId;
+      state: "not_activated" | "unavailable" | "restricted";
+    };
 export type AccountServiceSummary = { version: 1; services: AccountService[] };
 
 const catalogueEntry = (id: string) =>
@@ -81,7 +84,11 @@ export function parseAccountServices(
     if (!accountServiceIds.includes(serviceId) || seen.has(serviceId))
       return null;
     seen.add(serviceId);
-    if (record.state === "not_activated" || record.state === "unavailable") {
+    if (
+      record.state === "not_activated" ||
+      record.state === "unavailable" ||
+      record.state === "restricted"
+    ) {
       services.push({ serviceId, state: record.state });
       continue;
     }

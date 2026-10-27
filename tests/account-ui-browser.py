@@ -150,7 +150,24 @@ with sync_playwright() as p:
         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
         page.screenshot(path=str(OUT / f"services-logos-{width}.png"), full_page=True)
     assert not errors, errors
-    (OUT / "shared-account-browser-report.json").write_text(json.dumps({"syntheticIdentity": True, "realAccountChanged": False, "checks": ["keyboard", "outside", "service callbacks", "signout duplicate/pending/failure/retry/success", "loading", "signed-out", "legacy", "unavailable/retry", "central services/profile", "font isolation", "mobile", "axe"]}, indent=2))
+    summary["services"] = [
+        {"serviceId": "kazi", "state": "restricted"},
+        {"serviceId": "wlan", "state": "activated", "activation": {"activatedAt": None, "firstObservedAt": 1800000000000}},
+        {"serviceId": "playkin", "state": "restricted"},
+    ]
+    for width in [390, 1440]:
+        page.set_viewport_size({"width": width, "height": 1000})
+        page.goto(BASE + "/account")
+        expect(central.locator(".account-service-list > li")).to_have_count(1)
+        expect(central.get_by_role("heading", name="Wlan", exact=True)).to_be_visible()
+        expect(central.get_by_role("link", name="Open Kazi")).to_have_count(0)
+        expect(central.get_by_role("link", name="Open PlayKin")).to_have_count(0)
+        expect(central.get_by_role("link", name="Browse applications")).to_have_count(0)
+        expect(central.get_by_text("This account has access to Wlan.", exact=False)).to_be_visible()
+        page.screenshot(path=str(OUT / f"wlan-only-account-{width}.png"), full_page=True)
+    page.goto(BASE + "/account?view=profile")
+    expect(central.get_by_text("Profile settings fixture")).to_be_visible()
+    (OUT / "shared-account-browser-report.json").write_text(json.dumps({"syntheticIdentity": True, "realAccountChanged": False, "checks": ["keyboard", "outside", "service callbacks", "signout duplicate/pending/failure/retry/success", "loading", "signed-out", "legacy", "unavailable/retry", "central services/profile", "Wlan-only service navigation and profile", "font isolation", "mobile", "axe"]}, indent=2))
     context.close()
     browser.close()
     print("PASS: shared menu interactions, synthetic signed-in/out routes, central adapter boundaries, responsive/font isolation and axe checks.")
