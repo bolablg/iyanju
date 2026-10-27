@@ -100,7 +100,10 @@ test("summary parsing allowlists fields and service launch URLs use only reviewe
     accountServiceOpenUrl("kazi", "https://unreviewed.vercel.app"),
     null,
   );
-  assert.equal(accountServiceOpenUrl("playkin", "https://iyanju.com"), null);
+  assert.equal(
+    accountServiceOpenUrl("playkin", "https://iyanju.com"),
+    "https://playkin.iyanju.com",
+  );
 });
 
 test("only default session audiences for Convex enable the private service request", () => {
