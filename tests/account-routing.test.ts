@@ -50,3 +50,17 @@ test("login and signup preserve a validated destination without adding a second 
   assert.equal(accountEntryUrl(true), "/account/sign-up");
   assert.equal(accountReturnUrl("/tools", []), "/tools");
 });
+
+test("production sign-in resumes only the exact hosted OAuth consent page", () => {
+  const consent = "https://accounts.iyanju.com/oauth-consent?client_id=https%3A%2F%2Fchatgpt.com%2Foauth%2Fcodex%2Fclient.json&state=test&redirect_uri=http%3A%2F%2F127.0.0.1%3A12345%2Fcallback";
+  assert.equal(accountReturnUrl(consent, [...PRODUCTION_ACCOUNT_ORIGINS]), consent);
+  for (const origins of [[], ["http://127.0.0.1:49569"]])
+    assert.equal(accountReturnUrl(consent, origins), "/account");
+  for (const value of [
+    "https://accounts.iyanju.com/", "https://accounts.iyanju.com/sign-in",
+    "https://accounts.iyanju.com/oauth-consent/other", "https://accounts.iyanju.com/oauth-consent#token",
+    "https://accounts.iyanju.com.evil.example/oauth-consent", "http://accounts.iyanju.com/oauth-consent",
+    "https://user@accounts.iyanju.com/oauth-consent", "https://accounts.iyanju.com:444/oauth-consent",
+  ]) assert.equal(accountReturnUrl(value, [...PRODUCTION_ACCOUNT_ORIGINS]), "/account", value);
+  assert.ok(!PRODUCTION_ACCOUNT_ORIGINS.includes("https://accounts.iyanju.com" as typeof PRODUCTION_ACCOUNT_ORIGINS[number]));
+});
