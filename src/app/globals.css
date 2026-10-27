@@ -1495,7 +1495,10 @@ main:focus {
 .account-service-mark img {
   display: block;
   max-width: 100%;
+  max-height: 100%;
+  width: auto;
   height: auto;
+  object-fit: contain;
 }
 .account-service-copy h3 {
   font-size: 23px;
