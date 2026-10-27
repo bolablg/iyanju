@@ -192,3 +192,37 @@ test("restricted OAuth navigation requires one exact Wlan resource and only know
   missing.searchParams.delete("resource");
   assert.equal(wlanConsentReturn(missing), false);
 });
+
+test("observed Wlan hosted-consent parameter shape is accepted without widening the resource", () => {
+  // Parameter names and scopes match the verified production flows. All client,
+  // callback, state and PKCE values below are synthetic, never captured proofs.
+  const params = new URLSearchParams({
+    client_id: "synthetic-observed-client",
+    code_challenge: "synthetic-pkce-challenge",
+    code_challenge_method: "S256",
+    redirect_uri: "http://127.0.0.1:7777/synthetic-callback",
+    resource: "https://wlan.iyanju.com/mcp",
+    response_type: "code",
+    scope:
+      "wlan:styles:read wlan:drafts:read wlan:drafts:write wlan:requests:read wlan:requests:write offline_access",
+    state: "synthetic-state",
+  });
+  const url = new URL("https://accounts.iyanju.com/oauth-consent");
+  url.search = params.toString();
+  const access = { version: 1 as const, services: ["wlan" as const] };
+  assert.equal(wlanConsentReturn(url), true);
+  assert.equal(
+    serviceReturnAllowed(url.href, access, "https://iyanju.com"),
+    true,
+  );
+  url.searchParams.delete("resource");
+  assert.equal(
+    serviceReturnAllowed(url.href, access, "https://iyanju.com"),
+    false,
+  );
+  url.searchParams.set("resource", "https://playkin.iyanju.com/mcp");
+  assert.equal(
+    serviceReturnAllowed(url.href, access, "https://iyanju.com"),
+    false,
+  );
+});
