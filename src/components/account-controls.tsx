@@ -8,14 +8,20 @@ import {
   UserButton,
   useClerk,
   useSignUp,
+  useSignIn,
   useUser,
 } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { emailLink } from "@/content/site";
 import Link from "next/link";
 import { SignupAgeConfirmation } from "./signup-age-confirmation";
 import { accountEntryUrl } from "@/lib/account-routing";
 import { readMinimumAgeConfirmation } from "@/lib/account-eligibility";
+import {
+  currentSignupConfirmation,
+  needsExplicitSignup,
+  signupAttemptScope,
+} from "@/lib/account-recovery";
 export function AccountControls({
   signUp = false,
   returnUrl = "/account",
@@ -54,14 +60,7 @@ export function AccountControls({
             {signUp ? (
               <SignupControls returnUrl={returnUrl} />
             ) : (
-              <SignIn
-                routing="hash"
-                signUpUrl={accountEntryUrl(true, returnUrl)}
-                forceRedirectUrl={accountEntryUrl(false, returnUrl)}
-                signUpForceRedirectUrl={accountEntryUrl(true, returnUrl)}
-                withSignUp={false}
-                transferable={false}
-              />
+              <SignInControls returnUrl={returnUrl} />
             )}
           </div>
         </Show>
@@ -72,16 +71,73 @@ export function AccountControls({
     </>
   );
 }
+function subscribeAccountHash(notify: () => void) {
+  window.addEventListener("hashchange", notify);
+  window.addEventListener("popstate", notify);
+  return () => {
+    window.removeEventListener("hashchange", notify);
+    window.removeEventListener("popstate", notify);
+  };
+}
+function useAccountHash() {
+  return useSyncExternalStore(
+    subscribeAccountHash,
+    () => window.location.hash,
+    () => "",
+  );
+}
+function SignInControls({ returnUrl }: { returnUrl: string }) {
+  const { signIn, fetchStatus } = useSignIn();
+  const hash = useAccountHash();
+  const verification = signIn.firstFactorVerification;
+  if (
+    needsExplicitSignup({
+      hash,
+      fetchStatus,
+      status: signIn.status,
+      verificationStatus: verification.status,
+      errorCode: verification.error?.code,
+      strategy: verification.strategy,
+    })
+  )
+    return (
+      <div className="account-panel" role="status">
+        <h2>Create your iYANJU account.</h2>
+        <p>
+          This sign-in did not find an iYANJU account. If this is your first
+          visit, continue to signup. You’ll confirm your eligibility before
+          creating an account.
+        </p>
+        <div className="button-row">
+          <a className="button" href={accountEntryUrl(true, returnUrl)}>
+            Continue to signup
+          </a>
+          <a className="text-link" href={accountEntryUrl(false, returnUrl)}>
+            Try another sign-in method
+          </a>
+        </div>
+      </div>
+    );
+  return (
+    <SignIn
+      routing="hash"
+      signUpUrl={accountEntryUrl(true, returnUrl)}
+      forceRedirectUrl={accountEntryUrl(false, returnUrl)}
+      signUpForceRedirectUrl={accountEntryUrl(true, returnUrl)}
+      withSignUp={false}
+      transferable={false}
+    />
+  );
+}
 function SignupControls({ returnUrl }: { returnUrl: string }) {
   const { signUp } = useSignUp();
+  const hash = useAccountHash();
   return (
     <SignupAgeConfirmation
       signInUrl={accountEntryUrl(false, returnUrl)}
-      pendingConfirmation={
-        signUp.status === "missing_requirements"
-          ? signUp.unsafeMetadata.minimumAgeConfirmation
-          : undefined
-      }
+      pendingConfirmation={currentSignupConfirmation(signUp, hash)}
+      attemptId={signUp.id}
+      attemptScope={signupAttemptScope(signUp, hash)}
     >
       {(confirmation) => (
         <SignUp
@@ -104,6 +160,7 @@ function SignedInControls({ returnUrl }: { returnUrl: string }) {
   if (!readMinimumAgeConfirmation(user.unsafeMetadata.minimumAgeConfirmation))
     return (
       <SignupAgeConfirmation
+        key={user.id}
         title="Confirm your account eligibility."
         onConfirm={async (confirmation) => {
           await user.update({
