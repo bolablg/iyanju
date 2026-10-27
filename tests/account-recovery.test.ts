@@ -24,27 +24,29 @@ const pending = {
 
 test("Google and GitHub get explicit signup recovery only for a confirmed no-account OAuth callback", () => {
   for (const provider of ["google", "github"]) {
-    const attempt = {
-      hash: "#/sso-callback",
-      fetchStatus: "idle",
-      status: "needs_identifier",
-      verificationStatus: "transferable",
-      errorCode: "external_account_not_found",
-      strategy: `oauth_${provider}`,
-      expiresAt: now + 60_000,
-    };
-    assert.equal(needsExplicitSignup(attempt), true);
-    const expiredAttempt = { ...attempt, expiresAt: now - 1 };
-    assert.equal(needsExplicitSignup(expiredAttempt), true);
-    for (const change of [
-      { hash: "" },
-      { hash: "#/sso-callback/unrelated" },
-      { fetchStatus: "fetching" },
-      { verificationStatus: "verified" },
-      { errorCode: "access_denied" },
-      { strategy: "password" },
-    ])
-      assert.equal(needsExplicitSignup({ ...attempt, ...change }), false);
+    for (const verificationStatus of ["transferable", "verified"]) {
+      const attempt = {
+        hash: "#/sso-callback",
+        fetchStatus: "idle",
+        status: "needs_identifier",
+        verificationStatus,
+        errorCode: "external_account_not_found",
+        strategy: `oauth_${provider}`,
+        expiresAt: now + 60_000,
+      };
+      assert.equal(needsExplicitSignup(attempt), true);
+      const expiredAttempt = { ...attempt, expiresAt: now - 1 };
+      assert.equal(needsExplicitSignup(expiredAttempt), true);
+      for (const change of [
+        { hash: "" },
+        { hash: "#/sso-callback/unrelated" },
+        { fetchStatus: "fetching" },
+        { verificationStatus: "unverified" },
+        { errorCode: "access_denied" },
+        { strategy: "password" },
+      ])
+        assert.equal(needsExplicitSignup({ ...attempt, ...change }), false);
+    }
   }
   assert.equal(isAccountOAuthCallback("#/sso-callback?intent=signUp"), true);
 });

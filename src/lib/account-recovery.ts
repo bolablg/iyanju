@@ -23,7 +23,8 @@ export function needsExplicitSignup({
     isAccountOAuthCallback(hash) &&
     fetchStatus === "idle" &&
     status === "needs_identifier" &&
-    verificationStatus === "transferable" &&
+    (verificationStatus === "transferable" ||
+      verificationStatus === "verified") &&
     errorCode === "external_account_not_found" &&
     typeof strategy === "string" &&
     strategy.startsWith("oauth_")
