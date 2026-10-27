@@ -5,7 +5,6 @@ import {
   Show,
   SignIn,
   SignUp,
-  UserButton,
   useClerk,
   useSignUp,
   useSignIn,
@@ -15,6 +14,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { emailLink } from "@/content/site";
 import Link from "next/link";
 import { SignupAgeConfirmation } from "./signup-age-confirmation";
+import { AccountDashboard } from "./account-dashboard";
 import { accountEntryUrl } from "@/lib/account-routing";
 import { readMinimumAgeConfirmation } from "@/lib/account-eligibility";
 import {
@@ -171,10 +171,10 @@ function SignedInControls({ returnUrl }: { returnUrl: string }) {
           });
         }}
       >
-        {() => <SignedInAccount returnUrl={returnUrl} />}
+        {() => <SignedInAccount key={user.id} returnUrl={returnUrl} />}
       </SignupAgeConfirmation>
     );
-  return <SignedInAccount returnUrl={returnUrl} />;
+  return <SignedInAccount key={user.id} returnUrl={returnUrl} />;
 }
 function SignedInAccount({ returnUrl }: { returnUrl: string }) {
   const { signOut } = useClerk();
@@ -193,9 +193,16 @@ function SignedInAccount({ returnUrl }: { returnUrl: string }) {
       setPending(false);
     }
   }
+  if (returnUrl === "/account")
+    return (
+      <AccountDashboard
+        onSignOut={() => void leave()}
+        signingOut={pending}
+        signOutError={error}
+      />
+    );
   return (
     <div className="account-panel">
-      <UserButton />
       <h2>You’re signed in to iYANJU.</h2>
       <p>
         Your account is ready. Each application manages its own data,
