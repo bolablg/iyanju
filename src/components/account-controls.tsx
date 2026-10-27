@@ -9,6 +9,7 @@ import {
   useSignUp,
   useSignIn,
   useUser,
+  useAuth,
 } from "@clerk/nextjs";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { emailLink } from "@/content/site";
@@ -17,6 +18,7 @@ import { SignupAgeConfirmation } from "./signup-age-confirmation";
 import { AccountDashboard } from "./account-dashboard";
 import { accountEntryUrl } from "@/lib/account-routing";
 import { readMinimumAgeConfirmation } from "@/lib/account-eligibility";
+import { parseAccountAccess, serviceReturnAllowed } from "@/lib/service-access";
 import {
   AccountMenu,
   AccountSummary,
@@ -186,21 +188,67 @@ function SignedInControls({ returnUrl }: { returnUrl: string }) {
           });
         }}
       >
-        {() => <SignedInAccount key={user.id} returnUrl={returnUrl} />}
+        {() => (
+          <SignedInAccount
+            key={`${user.id}:${returnUrl}`}
+            returnUrl={returnUrl}
+          />
+        )}
       </SignupAgeConfirmation>
     );
-  return <SignedInAccount key={user.id} returnUrl={returnUrl} />;
+  return (
+    <SignedInAccount key={`${user.id}:${returnUrl}`} returnUrl={returnUrl} />
+  );
 }
 function SignedInAccount({ returnUrl }: { returnUrl: string }) {
   const { signOut } = useClerk();
   const { user } = useUser();
+  const { getToken } = useAuth();
+  const [access, setAccess] = useState<
+    "loading" | "allowed" | "blocked" | "unavailable"
+  >("loading");
+  const [attempt, setAttempt] = useState(0);
   useEffect(() => {
-    if (returnUrl !== "/account") window.location.assign(returnUrl);
-  }, [returnUrl]);
+    if (returnUrl === "/account") return;
+    const controller = new AbortController();
+    let active = true;
+    async function checkAccess() {
+      try {
+        const token = await getToken({ skipCache: true });
+        if (!active) return;
+        if (!token) throw new Error("Authentication required");
+        const response = await fetch("/account/access", {
+          headers: { Authorization: `Bearer ${token}` },
+          credentials: "omit",
+          cache: "no-store",
+          redirect: "error",
+          signal: controller.signal,
+        });
+        if (!response.ok) throw new Error("Access unavailable");
+        const policy = parseAccountAccess(await response.json());
+        if (!policy) throw new Error("Access unavailable");
+        if (!active) return;
+        if (!serviceReturnAllowed(returnUrl, policy, window.location.origin)) {
+          setAccess("blocked");
+          return;
+        }
+        setAccess("allowed");
+        window.location.assign(returnUrl);
+      } catch {
+        if (active) setAccess("unavailable");
+      }
+    }
+    void checkAccess();
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [returnUrl, getToken, attempt]);
   async function leave() {
     await signOut({ redirectUrl: "/account" });
   }
-  if (returnUrl === "/account") return <AccountDashboard onSignOut={leave} />;
+  if (returnUrl === "/account" || access === "blocked")
+    return <AccountDashboard onSignOut={leave} />;
   return (
     <div className="account-panel">
       <AccountSummary
@@ -218,12 +266,23 @@ function SignedInAccount({ returnUrl }: { returnUrl: string }) {
         }
       />
       <h2>You’re signed in to iYANJU.</h2>
-      <p>
-        Your account is ready. Each application manages its own data,
-        membership, and permissions. Existing application accounts are adopted
-        separately.
+      <p role="status">
+        {access === "unavailable"
+          ? "Your application access could not be checked. Your profile and security settings remain available."
+          : "Checking your application access…"}
       </p>
-      {returnUrl !== "/account" && (
+      {access === "unavailable" && (
+        <button
+          className="button button-secondary"
+          onClick={() => {
+            setAccess("loading");
+            setAttempt((value) => value + 1);
+          }}
+        >
+          Try again
+        </button>
+      )}
+      {access === "allowed" && (
         <p>
           <a className="button" href={returnUrl}>
             Continue to your application →
@@ -231,8 +290,8 @@ function SignedInAccount({ returnUrl }: { returnUrl: string }) {
         </p>
       )}
       <p>
-        <Link href="/tools" className="text-link">
-          Explore the applications →
+        <Link href="/account?view=profile" className="text-link">
+          Profile &amp; security →
         </Link>
       </p>
       <AccountSignOutButton onSignOut={leave} />
