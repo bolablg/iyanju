@@ -207,8 +207,8 @@ function AccountServices({ userId }: { userId: string }) {
                       {display.logo ? (
                         <Image
                           src={display.logo}
-                          width={108}
-                          height={34}
+                          width={display.logoWidth}
+                          height={display.logoHeight}
                           alt=""
                         />
                       ) : (

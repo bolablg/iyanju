@@ -9,6 +9,12 @@ await copyFile(
   path.join(root, "public/brand/kazi-logo.svg"),
   path.join(app, "public/brand/kazi-logo.svg"),
 );
+for (const asset of ["wlan-wordmark.svg", "playkin-mark.png"]) {
+  await copyFile(
+    path.join(root, "public/brand", asset),
+    path.join(app, "public/brand", asset),
+  );
+}
 await writeFile(
   path.join(app, "package.json"),
   JSON.stringify({ name: "account-ui-verification", private: true }),

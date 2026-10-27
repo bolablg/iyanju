@@ -136,6 +136,19 @@ with sync_playwright() as p:
     page.keyboard.press("ArrowDown")
     page.keyboard.press("Space")
     expect(page).to_have_url(BASE + "/account?view=profile")
+    # Display metadata must use each service's actual brand without changing access state.
+    summary["services"] = [{"serviceId": service, "state": "activated", "activation": {"activatedAt": None, "firstObservedAt": 1800000000000}} for service in ["kazi", "wlan", "playkin"]]
+    for width in [390, 1440]:
+        page.set_viewport_size({"width": width, "height": 1000})
+        page.goto(BASE + "/account")
+        expect(central.locator(".account-service-list > li")).to_have_count(3)
+        page.wait_for_function("Array.from(document.querySelectorAll('.account-service-mark img')).length === 3 && Array.from(document.querySelectorAll('.account-service-mark img')).every(image => image.complete && image.naturalWidth > 0)")
+        for asset in ["kazi-logo.svg", "wlan-wordmark.svg", "playkin-mark.png"]:
+            expect(central.locator(f'.account-service-mark img[src*="{asset}"]')).to_have_count(1)
+        for image in central.locator(".account-service-mark img").all():
+            assert image.evaluate("e => { const a=e.getBoundingClientRect(), b=e.parentElement.getBoundingClientRect(); return a.width>0 && a.height>0 && a.width<=b.width && a.height<=b.height; }")
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+        page.screenshot(path=str(OUT / f"services-logos-{width}.png"), full_page=True)
     assert not errors, errors
     (OUT / "shared-account-browser-report.json").write_text(json.dumps({"syntheticIdentity": True, "realAccountChanged": False, "checks": ["keyboard", "outside", "service callbacks", "signout duplicate/pending/failure/retry/success", "loading", "signed-out", "legacy", "unavailable/retry", "central services/profile", "font isolation", "mobile", "axe"]}, indent=2))
     context.close()
