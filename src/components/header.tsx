@@ -58,11 +58,12 @@ export function Header() {
           ))}
           <Link
             href="/account"
+            prefetch={false}
             className="account-link"
             onClick={close}
             aria-current={path.startsWith("/account") ? "page" : undefined}
           >
-            Sign in <Arrow diagonal />
+            Account <Arrow diagonal />
           </Link>
         </nav>
       </div>
