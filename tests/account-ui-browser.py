@@ -123,7 +123,7 @@ with sync_playwright() as p:
         assert box["x"] >= 0 and box["x"] + box["width"] <= width and box["y"] >= 0, (width, box)
         assert all(item["height"] >= 44 for item in popup.get_by_role("menuitem").evaluate_all("elements => elements.map(e => ({height:e.getBoundingClientRect().height}))"))
         assert "iYANJU Account" in trigger.evaluate("e=>getComputedStyle(e).fontFamily")
-        assert trigger.evaluate("e=>getComputedStyle(e).borderRadius") == "0px"
+        assert trigger.evaluate("e=>getComputedStyle(e).borderRadius") == "12px"
         assert trigger.evaluate("e=>getComputedStyle(e).color") == "rgb(24, 24, 27)"
         assert popup.locator(".iy-icon").first.evaluate("e=>e.getBBox().width > 0"), "Scoped resets must preserve SVG geometry"
         expect(trigger.locator(".iy-avatar")).to_have_text("AE")
