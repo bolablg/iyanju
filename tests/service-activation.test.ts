@@ -1,7 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  createAccountServicesHandler,
+  createAccountServicesHandler as createHandler,
+  createAccountAccessHandler,
   parseKaziActivation,
   parseServiceActivation,
   serviceActivationSettings,
@@ -15,6 +16,18 @@ const settings: ServiceActivationSettings = {
   kaziEndpoint: "https://kazi.iyanju.com/api/account/service-activation",
   wlanEndpoint: "https://wlan.iyanju.com/api/account/service-activation",
 };
+// Ordinary control uses an authoritative directory result, not absent JWT claims.
+const createAccountServicesHandler = (
+  settings: Parameters<typeof createHandler>[0],
+  authenticate: Parameters<typeof createHandler>[1],
+  fetchService?: Parameters<typeof createHandler>[3],
+) =>
+  createHandler(
+    settings,
+    authenticate,
+    async (subject) => ({ id: subject, publicMetadata: {} }),
+    fetchService,
+  );
 const now = Date.now();
 const session = {
   userId: "user_owner",
@@ -338,4 +351,116 @@ test("a confirmed unactivated Wlan account does not become activated by an overv
       }),
   )(request());
   assert.equal((await result.json()).services[1].state, "not_activated");
+});
+
+test("current Wlan-only policy forwards the proof only to Wlan, regardless of absent or stale claims", async () => {
+  const calls: string[] = [];
+  const restrictedUser = {
+    id: session.userId,
+    publicMetadata: {
+      iyanju_service_restriction: { version: 1, services: ["wlan"] },
+    },
+  };
+  for (const claims of [
+    session.claims,
+    {
+      ...session.claims,
+      iyanju_access: { version: 1, subject: session.userId, restriction: null },
+    },
+  ]) {
+    calls.length = 0;
+    const response = await createHandler(
+      settings,
+      async () => ({ ...session, claims }),
+      async (subject) => {
+        assert.equal(subject, session.userId);
+        return restrictedUser;
+      },
+      async (url) => {
+        calls.push(String(url));
+        return Response.json({ ...summary, serviceId: "wlan" });
+      },
+    )(request());
+    assert.equal(response.status, 200);
+    assert.deepEqual(calls, [settings.wlanEndpoint]);
+    assert.deepEqual((await response.json()).services, [
+      { serviceId: "kazi", state: "restricted" },
+      { serviceId: "wlan", state: "activated", activation: summary.activation },
+      { serviceId: "playkin", state: "restricted" },
+    ]);
+  }
+});
+
+test("directory failures and malformed or wrong-subject policy never forward a bearer", async () => {
+  let calls = 0;
+  const fetcher: typeof fetch = async () => {
+    calls++;
+    return Response.json(summary);
+  };
+  for (const user of [
+    undefined,
+    null,
+    { id: "another", publicMetadata: {} },
+    {
+      id: session.userId,
+      publicMetadata: { iyanju_service_restriction: null },
+    },
+    {
+      id: session.userId,
+      publicMetadata: {
+        iyanju_service_restriction: { version: 1, services: ["unknown"] },
+      },
+    },
+  ]) {
+    assert.equal(
+      (
+        await createHandler(
+          settings,
+          async () => session,
+          async () => user,
+          fetcher,
+        )(request())
+      ).status,
+      403,
+    );
+  }
+  assert.equal(
+    (
+      await createHandler(
+        settings,
+        async () => session,
+        async () => {
+          throw new Error("private directory detail");
+        },
+        fetcher,
+      )(request())
+    ).status,
+    503,
+  );
+  assert.equal(calls, 0);
+});
+
+test("private navigation policy is read-only, subject-bound and never contacts any service", async () => {
+  const handler = createAccountAccessHandler(
+    settings,
+    async (headerOnly) => {
+      assert.equal(headerOnly.url, settings.rootOrigin + "/account/access");
+      assert.equal(headerOnly.headers.has("cookie"), false);
+      return session;
+    },
+    async (subject) => ({
+      id: subject,
+      publicMetadata: {
+        iyanju_service_restriction: { version: 1, services: ["wlan"] },
+      },
+    }),
+  );
+  const response = await handler(
+    new Request(settings.rootOrigin + "/account/access", {
+      headers: { Authorization: "Bearer synthetic.payload.signature" },
+    }),
+  );
+  assert.deepEqual(await response.json(), { version: 1, services: ["wlan"] });
+  assert.equal(response.headers.get("Cache-Control"), "private, no-store");
+  assert.equal((await handler(request())).status, 400);
 });
