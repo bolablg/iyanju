@@ -1,0 +1,276 @@
+@font-face {
+  font-family: "iYANJU Account";
+  src: url("./fonts/plus-jakarta-sans.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+}
+
+/* Specific, scoped resets protect the surface from ordinary app/button/nav styles. */
+.iy-account.iy-account.iy-account {
+  all: initial;
+  --iy-paper: #faf6ee;
+  --iy-ink: #18181b;
+  --iy-muted: #59565d;
+  --iy-line: #d9d4ca;
+  --iy-wash: #f2ede0;
+  --iy-violet: #7131d4;
+  --iy-mint: #d5f4e6;
+  box-sizing: border-box;
+  display: block;
+  min-width: 0;
+  color: var(--iy-ink);
+  font:
+    400 14px/1.5 "iYANJU Account",
+    sans-serif;
+  text-align: start;
+  letter-spacing: normal;
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+}
+.iy-account.iy-account.iy-account :where(*:not(svg, svg *)) {
+  all: revert;
+  box-sizing: border-box;
+  font: inherit;
+  color: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+.iy-account.iy-account.iy-account :where(button, a) {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  box-shadow: none;
+  text-decoration: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.iy-account.iy-account.iy-account :where(button, a):focus-visible {
+  outline: 3px solid var(--iy-violet);
+  outline-offset: -3px;
+}
+.iy-account.iy-account.iy-account
+  :where(button:disabled, [aria-disabled="true"]) {
+  opacity: 0.6;
+  cursor: default;
+}
+.iy-account.iy-account.iy-account.iy-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  max-width: 100%;
+}
+.iy-account.iy-account.iy-account .iy-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  overflow: hidden;
+  border: 1px solid var(--iy-ink);
+  border-radius: 50%;
+  background: var(--iy-mint);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+}
+.iy-account.iy-account.iy-account .iy-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.iy-account.iy-account.iy-account .iy-identity {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 2px;
+}
+.iy-account.iy-account.iy-account .iy-label {
+  color: var(--iy-muted);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.iy-account.iy-account.iy-account .iy-identity strong {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.iy-account.iy-account.iy-account .iy-email {
+  font-size: 12px;
+  color: var(--iy-muted);
+  overflow-wrap: anywhere;
+}
+.iy-account.iy-account.iy-account .iy-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  min-height: 56px;
+  padding: 8px 12px;
+  border: 1px solid var(--iy-line);
+  border-radius: 0;
+  background: #ffffff;
+  text-align: start;
+}
+.iy-account.iy-account.iy-account .iy-trigger:hover,
+.iy-account.iy-account.iy-account .iy-trigger[aria-expanded="true"] {
+  background: var(--iy-paper);
+  border-color: var(--iy-ink);
+}
+.iy-account.iy-account.iy-account .iy-icon {
+  display: block;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.iy-account.iy-account.iy-account .iy-icon * {
+  fill: none;
+  stroke: inherit;
+  stroke-width: inherit;
+  stroke-linecap: inherit;
+  stroke-linejoin: inherit;
+}
+.iy-account.iy-account.iy-account[data-variant="compact"] .iy-trigger {
+  padding: 4px 8px;
+  min-height: 48px;
+  gap: 8px;
+}
+.iy-account.iy-account.iy-account[data-variant="compact"]
+  .iy-trigger
+  .iy-avatar {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  font-size: 14px;
+}
+.iy-account.iy-account.iy-account.iy-popover {
+  position: fixed;
+  z-index: 2147483000;
+  width: 328px;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0;
+  border: 2px solid var(--iy-ink);
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: none;
+}
+.iy-account.iy-account.iy-account .iy-menu-heading {
+  display: block;
+  padding: 20px 16px;
+  background: var(--iy-paper);
+  border-top: 4px solid #ff4400;
+}
+.iy-account.iy-account.iy-account .iy-group {
+  display: block;
+  padding: 8px;
+  border-top: 1px solid var(--iy-line);
+}
+.iy-account.iy-account.iy-account .iy-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: start;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.iy-account.iy-account.iy-account .iy-action:not(:disabled):hover {
+  background: var(--iy-wash);
+}
+.iy-account.iy-account.iy-account .iy-action:not(:disabled):active {
+  background: var(--iy-mint);
+}
+.iy-account.iy-account.iy-account .iy-group-label {
+  margin: 6px 12px 4px;
+  color: var(--iy-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+.iy-account.iy-account.iy-account .iy-service-role,
+.iy-account.iy-account.iy-account .iy-empty {
+  margin: 4px 12px 8px;
+  font-size: 12px;
+  color: var(--iy-muted);
+}
+.iy-account.iy-account.iy-account .iy-error {
+  margin: 0;
+  padding: 12px 16px;
+  border-top: 1px solid #d7a39e;
+  color: #942522;
+  background: #fff2ef;
+  font-size: 12px;
+}
+.iy-account.iy-account.iy-account.iy-entry {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.iy-account.iy-account.iy-account.iy-entry > .iy-action {
+  width: auto;
+  border: 1px solid var(--iy-ink);
+  background: var(--iy-paper);
+}
+.iy-account.iy-account.iy-account.iy-signout {
+  max-width: 328px;
+}
+.iy-account.iy-account.iy-account.iy-signout > .iy-action {
+  border: 1px solid var(--iy-ink);
+  width: auto;
+}
+.iy-account.iy-account.iy-account .iy-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.iy-account.iy-account.iy-account .iy-placeholder {
+  background: var(--iy-wash);
+}
+.iy-account-theme {
+  font-family: "iYANJU Account", sans-serif;
+}
+.iy-account-theme :where(.cl-rootBox, .cl-rootBox *) {
+  font-family: "iYANJU Account", sans-serif !important;
+}
+
+@media (max-width: 440px) {
+  .iy-account.iy-account.iy-account .iy-trigger {
+    gap: 8px;
+  }
+  .iy-account.iy-account.iy-account .iy-trigger .iy-identity {
+    max-width: 200px;
+  }
+}
+@media (forced-colors: active) {
+  .iy-account.iy-account.iy-account .iy-action:focus-visible,
+  .iy-account.iy-account.iy-account .iy-trigger:focus-visible {
+    outline-color: Highlight;
+  }
+}

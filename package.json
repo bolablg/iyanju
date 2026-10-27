@@ -5,6 +5,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build:account-ui": "node packages/account-ui/build.mjs",
+    "pack:account-ui": "node packages/account-ui/pack.mjs",
     "dev": "next dev --hostname 127.0.0.1 --port 3000",
     "build": "next build",
     "start": "next start --hostname 127.0.0.1 --port 3000",
@@ -12,9 +14,10 @@
     "lint": "eslint .",
     "test": "node --experimental-strip-types --test tests/*.test.ts tests/*.test.mjs",
     "test:e2e": ".venv/bin/python tests/browser.py",
-    "format:check": "prettier --check src tests/*.ts tests/*.mjs .github *.ts *.json *.mjs README.md CONTRIBUTING.md"
+    "format:check": "prettier --check src tests/*.ts tests/*.mjs tests/fixtures packages/account-ui/src packages/account-ui/*.json packages/account-ui/*.mjs packages/account-ui/README.md .github *.ts *.json *.mjs README.md CONTRIBUTING.md"
   },
   "dependencies": {
+    "@iyanju/account-ui": "file:packages/account-ui",
     "@clerk/nextjs": "^7.0.0",
     "next": "^16.4.3",
     "react": "^19.3.1",

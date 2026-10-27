@@ -24,9 +24,11 @@ export function accountReturnUrl(
     // Clerk's hosted OAuth consent sends signed-out users through our account
     // page. Permit only this exact provider-owned return in production; it is
     // a navigation destination, never a new authorized token origin.
-    const hostedConsent = allowedOrigins.includes("https://iyanju.com") &&
+    const hostedConsent =
+      allowedOrigins.includes("https://iyanju.com") &&
       url.origin === "https://accounts.iyanju.com" &&
-      url.pathname === "/oauth-consent" && !url.hash;
+      url.pathname === "/oauth-consent" &&
+      !url.hash;
     if (
       (!allowedOrigins.includes(url.origin) && !hostedConsent) ||
       url.username ||

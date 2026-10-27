@@ -16,3 +16,4 @@ local/
 /MASTER_INSTRUCTIONS.md
 /.stitch/
 /.clerk/
+packages/*/.build/

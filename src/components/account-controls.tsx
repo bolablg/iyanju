@@ -18,6 +18,11 @@ import { AccountDashboard } from "./account-dashboard";
 import { accountEntryUrl } from "@/lib/account-routing";
 import { readMinimumAgeConfirmation } from "@/lib/account-eligibility";
 import {
+  AccountMenu,
+  AccountSummary,
+  AccountSignOutButton,
+} from "@iyanju/account-ui";
+import {
   currentSignupConfirmation,
   needsExplicitSignup,
   signupAttemptScope,
@@ -50,12 +55,22 @@ export function AccountControls({
               </a>
             </>
           ) : (
-            "Connecting to the account service…"
+            <AccountSummary state={{ status: "loading" }} />
           )}
         </div>
       </ClerkLoading>
       <ClerkLoaded>
         <Show when="signed-out">
+          <AccountMenu
+            state={{ status: "signed-out" }}
+            links={{
+              profile: "/account?view=profile",
+              services: "/account",
+              signIn: accountEntryUrl(false, returnUrl),
+              signUp: accountEntryUrl(true, returnUrl),
+            }}
+            onSignOut={async () => {}}
+          />
           <div className="clerk-controls">
             {signUp ? (
               <SignupControls returnUrl={returnUrl} />
@@ -156,7 +171,7 @@ function SignupControls({ returnUrl }: { returnUrl: string }) {
 }
 function SignedInControls({ returnUrl }: { returnUrl: string }) {
   const { user } = useUser();
-  if (!user) return <p role="status">Loading your account…</p>;
+  if (!user) return <AccountSummary state={{ status: "loading" }} />;
   if (!readMinimumAgeConfirmation(user.unsafeMetadata.minimumAgeConfirmation))
     return (
       <SignupAgeConfirmation
@@ -178,31 +193,30 @@ function SignedInControls({ returnUrl }: { returnUrl: string }) {
 }
 function SignedInAccount({ returnUrl }: { returnUrl: string }) {
   const { signOut } = useClerk();
-  const [pending, setPending] = useState(false);
-  const [error, setError] = useState("");
+  const { user } = useUser();
   useEffect(() => {
     if (returnUrl !== "/account") window.location.assign(returnUrl);
   }, [returnUrl]);
   async function leave() {
-    setPending(true);
-    setError("");
-    try {
-      await signOut({ redirectUrl: "/account" });
-    } catch {
-      setError("We couldn’t sign you out. Please try again.");
-      setPending(false);
-    }
+    await signOut({ redirectUrl: "/account" });
   }
-  if (returnUrl === "/account")
-    return (
-      <AccountDashboard
-        onSignOut={() => void leave()}
-        signingOut={pending}
-        signOutError={error}
-      />
-    );
+  if (returnUrl === "/account") return <AccountDashboard onSignOut={leave} />;
   return (
     <div className="account-panel">
+      <AccountSummary
+        state={
+          user
+            ? {
+                status: "signed-in",
+                identity: {
+                  name: user.fullName || user.username,
+                  email: user.primaryEmailAddress?.emailAddress,
+                  imageUrl: user.hasImage ? user.imageUrl : null,
+                },
+              }
+            : { status: "loading" }
+        }
+      />
       <h2>You’re signed in to iYANJU.</h2>
       <p>
         Your account is ready. Each application manages its own data,
@@ -221,10 +235,7 @@ function SignedInAccount({ returnUrl }: { returnUrl: string }) {
           Explore the applications →
         </Link>
       </p>
-      <button className="button" onClick={leave} disabled={pending}>
-        {pending ? "Signing out…" : "Sign out"}
-      </button>
-      {error && <p role="alert">{error}</p>}
+      <AccountSignOutButton onSignOut={leave} />
     </div>
   );
 }
