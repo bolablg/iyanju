@@ -93,7 +93,7 @@ export function useSignIn() {
     signIn: {
       status: 'needs_identifier',
       firstFactorVerification: {
-        status: params.get('no-account') ? 'transferable' : null,
+        status: params.get('no-account') ? (params.get('verification') || 'transferable') : null,
         error: params.get('no-account') ? { code: params.get('error') || 'external_account_not_found' } : null,
         strategy: 'oauth_' + (params.get('provider') || 'google'),
         expireAt: new Date(Date.now() + 60000),
@@ -243,8 +243,8 @@ with sync_playwright() as p:
     # Google and GitHub use the same callback/age flow and preserve app destinations.
     from urllib.parse import urlencode, urlparse, parse_qs
     return_url = 'https://kazi.iyanju.com/account/link/central'
-    for provider in ['google', 'github']:
-        page.goto(BASE + '/?' + urlencode({'mode': 'sign-in', 'no-account': 'true', 'provider': provider, 'return_to': return_url}) + '#/sso-callback')
+    for provider, verification in [('google', 'transferable'), ('google', 'verified'), ('github', 'transferable'), ('github', 'verified')]:
+        page.goto(BASE + '/?' + urlencode({'mode': 'sign-in', 'no-account': 'true', 'provider': provider, 'verification': verification, 'return_to': return_url}) + '#/sso-callback')
         expect(page.get_by_role('heading', name='Create your iYANJU account.')).to_be_visible()
         assert page.evaluate('window.__fixtureCreatedAccounts || 0') == 0
         signup = page.get_by_role('link', name='Continue to signup', exact=True)
