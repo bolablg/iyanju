@@ -72,10 +72,11 @@ export type VerifiedRootSession = {
 };
 
 /** Additional scope checks on the exact JWT already verified by Clerk. */
-export function validRootServiceSession(
+function validRootAccountSession(
   session: VerifiedRootSession,
   settings: ServiceActivationSettings,
   now = Date.now(),
+  mode: "services" | "access" = "services",
 ) {
   const claims = session.claims;
   if (
@@ -92,7 +93,8 @@ export function validRootServiceSession(
     claims.client_id === undefined &&
     claims.azp === settings.rootOrigin &&
     (claims.sts === undefined || claims.sts === "active") &&
-    (claims.aud === "convex" ||
+    ((mode === "access" && claims.aud === undefined) ||
+      claims.aud === "convex" ||
       (Array.isArray(claims.aud) &&
         claims.aud.length === 1 &&
         claims.aud[0] === "convex")) &&
@@ -109,6 +111,14 @@ export function validRootServiceSession(
         Number.isFinite(claims.nbf) &&
         claims.nbf <= now / 1000 + 60))
   );
+}
+
+export function validRootServiceSession(
+  session: VerifiedRootSession,
+  settings: ServiceActivationSettings,
+  now = Date.now(),
+) {
+  return validRootAccountSession(session, settings, now, "services");
 }
 
 export function parseServiceActivation(
@@ -253,7 +263,8 @@ function createAccountHandler(
     } catch {
       return failure(503);
     }
-    if (!validRootServiceSession(session, settings)) return failure(401);
+    if (!validRootAccountSession(session, settings, Date.now(), mode))
+      return failure(401);
     let access;
     try {
       access = authoritativeServiceAccess(

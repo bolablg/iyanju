@@ -464,3 +464,81 @@ test("private navigation policy is read-only, subject-bound and never contacts a
   assert.equal(response.headers.get("Cache-Control"), "private, no-store");
   assert.equal((await handler(request())).status, 400);
 });
+
+test("navigation checks current policy for a valid default session without a Convex audience", async () => {
+  const ordinary = {
+    ...session,
+    claims: { ...session.claims, aud: undefined },
+  };
+  const accessRequest = () =>
+    new Request(settings.rootOrigin + "/account/access", {
+      headers: { Authorization: "Bearer synthetic.payload.signature" },
+    });
+  for (const restriction of [undefined, { version: 1, services: ["wlan"] }]) {
+    const handler = createAccountAccessHandler(
+      settings,
+      async () => ordinary,
+      async (subject) => ({
+        id: subject,
+        publicMetadata: restriction
+          ? { iyanju_service_restriction: restriction }
+          : {},
+      }),
+    );
+    const response = await handler(accessRequest());
+    assert.equal(response.status, 200);
+    assert.deepEqual(await response.json(), {
+      version: 1,
+      services: restriction ? ["wlan"] : ["kazi", "wlan", "playkin"],
+    });
+  }
+  assert.equal(validRootServiceSession(ordinary, settings), false);
+  let effects = 0;
+  const forwarding = createHandler(
+    settings,
+    async () => ordinary,
+    async () => {
+      effects++;
+      return { id: session.userId, publicMetadata: {} };
+    },
+    async () => {
+      effects++;
+      return Response.json(summary);
+    },
+  );
+  assert.equal((await forwarding(request())).status, 401);
+  assert.equal(effects, 0);
+});
+
+test("navigation without an audience still rejects wrong bindings and explicit unsupported audiences", async () => {
+  let directoryReads = 0;
+  for (const change of [
+    { aud: null },
+    { aud: "other" },
+    { aud: ["convex", "other"] },
+    { sid: undefined },
+    { sub: "other" },
+    { azp: "https://kazi.iyanju.com" },
+    { iss: "https://other.invalid" },
+    { client_id: "oauth-client" },
+  ]) {
+    const handler = createAccountAccessHandler(
+      settings,
+      async () => ({
+        ...session,
+        claims: { ...session.claims, aud: undefined, ...change },
+      }),
+      async (subject) => {
+        directoryReads++;
+        return { id: subject, publicMetadata: {} };
+      },
+    );
+    const response = await handler(
+      new Request(settings.rootOrigin + "/account/access", {
+        headers: { Authorization: "Bearer synthetic.payload.signature" },
+      }),
+    );
+    assert.equal(response.status, 401);
+  }
+  assert.equal(directoryReads, 0);
+});
