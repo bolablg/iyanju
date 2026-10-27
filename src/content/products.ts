@@ -87,10 +87,10 @@ export const collection: CollectionEntry[] = [
     name: "PlayKin",
     description:
       "A YouTube companion for playlist management and shared listening.",
-    category: "In development",
+    category: "YouTube companion",
     tone: "mint",
-    url: null,
-    action: "In development",
+    url: "https://playkin.iyanju.com",
+    action: "Open PlayKin",
   },
   {
     slug: "agentory",
