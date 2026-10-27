@@ -6,10 +6,10 @@ export const accountTheme = {
     colorText: "#18181b",
     colorTextSecondary: "#59565d",
     fontFamily: '"iYANJU Account", sans-serif',
-    borderRadius: "0",
+    borderRadius: "12px",
   },
   elements: {
-    card: { boxShadow: "none", border: "2px solid #18181b" },
+    card: { boxShadow: "none", border: "1px solid #e3dfd6" },
     cardBox: { boxShadow: "none", maxWidth: "100%" },
     formButtonPrimary: { boxShadow: "none" },
   },

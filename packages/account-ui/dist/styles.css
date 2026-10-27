@@ -12,7 +12,7 @@
   --iy-paper: #faf6ee;
   --iy-ink: #18181b;
   --iy-muted: #59565d;
-  --iy-line: #d9d4ca;
+  --iy-line: #e3dfd6;
   --iy-wash: #f2ede0;
   --iy-violet: #7131d4;
   --iy-mint: #d5f4e6;
@@ -70,7 +70,7 @@
   height: 44px;
   min-width: 44px;
   overflow: hidden;
-  border: 1px solid var(--iy-ink);
+  border: 1px solid var(--iy-line);
   border-radius: 50%;
   background: var(--iy-mint);
   font-size: 16px;
@@ -115,14 +115,14 @@
   min-height: 56px;
   padding: 8px 12px;
   border: 1px solid var(--iy-line);
-  border-radius: 0;
+  border-radius: 12px;
   background: #ffffff;
   text-align: start;
 }
 .iy-account.iy-account.iy-account .iy-trigger:hover,
 .iy-account.iy-account.iy-account .iy-trigger[aria-expanded="true"] {
   background: var(--iy-paper);
-  border-color: var(--iy-ink);
+  border-color: #cbc5b9;
 }
 .iy-account.iy-account.iy-account .iy-icon {
   display: block;
@@ -164,8 +164,8 @@
   overflow: auto;
   overscroll-behavior: contain;
   padding: 0;
-  border: 2px solid var(--iy-ink);
-  border-radius: 0;
+  border: 1px solid var(--iy-line);
+  border-radius: 16px;
   background: #ffffff;
   box-shadow: none;
 }
@@ -173,7 +173,6 @@
   display: block;
   padding: 20px 16px;
   background: var(--iy-paper);
-  border-top: 4px solid #ff4400;
 }
 .iy-account.iy-account.iy-account .iy-group {
   display: block;
@@ -188,7 +187,7 @@
   min-height: 44px;
   padding: 10px 12px;
   border: 0;
-  border-radius: 0;
+  border-radius: 8px;
   background: transparent;
   text-align: start;
   font-size: 13px;
@@ -229,14 +228,14 @@
 }
 .iy-account.iy-account.iy-account.iy-entry > .iy-action {
   width: auto;
-  border: 1px solid var(--iy-ink);
+  border: 1px solid var(--iy-line);
   background: var(--iy-paper);
 }
 .iy-account.iy-account.iy-account.iy-signout {
   max-width: 328px;
 }
 .iy-account.iy-account.iy-account.iy-signout > .iy-action {
-  border: 1px solid var(--iy-ink);
+  border: 1px solid var(--iy-line);
   width: auto;
 }
 .iy-account.iy-account.iy-account .iy-sr-only {
