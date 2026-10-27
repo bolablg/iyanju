@@ -20,6 +20,8 @@ args = parser.parse_args()
 
 if args.prepare:
     (APP / "app/account/sign-up").mkdir(parents=True, exist_ok=True)
+    if not (APP / "public").exists() and not (APP / "public").is_symlink():
+        (APP / "public").symlink_to(ROOT / "public", target_is_directory=True)
     (APP / "package.json").write_text(json.dumps({"private": True, "name": "signup-preview"}))
     (APP / "next.config.mjs").write_text("""
 import path from 'node:path';
