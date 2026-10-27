@@ -3,7 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { UserAvatar, UserProfile, useAuth, useUser } from "@clerk/nextjs";
+import { UserProfile, useAuth, useUser } from "@clerk/nextjs";
+import {
+  AccountMenu,
+  AccountSummary,
+  accountTheme,
+  type AccountState,
+} from "@iyanju/account-ui";
 import { useEffect, useState } from "react";
 import { Arrow } from "./brand";
 import {
@@ -16,48 +22,38 @@ import {
 } from "../lib/account-services-view";
 
 type DashboardProps = {
-  onSignOut: () => void;
-  signingOut: boolean;
-  signOutError: string;
+  onSignOut: () => Promise<void>;
 };
-export function AccountDashboard({
-  onSignOut,
-  signingOut,
-  signOutError,
-}: DashboardProps) {
+export function AccountDashboard({ onSignOut }: DashboardProps) {
   const { user } = useUser();
   const params = useSearchParams();
   const profile = params.get("view") === "profile";
-  if (!user) return <p role="status">Loading your account…</p>;
-  const email = user.primaryEmailAddress?.emailAddress;
-  const name = user.fullName || user.username || email || "Your account";
+  if (!user) return <AccountSummary state={{ status: "loading" }} />;
+  const state: AccountState = {
+    status: "signed-in",
+    identity: {
+      name: user.fullName || user.username,
+      email: user.primaryEmailAddress?.emailAddress,
+      imageUrl: user.hasImage ? user.imageUrl : null,
+    },
+  };
   return (
     <div className="account-dashboard">
       <div className="account-dashboard-head">
-        <div className="account-person">
-          <UserAvatar
-            appearance={{
-              elements: { avatarBox: { width: "44px", height: "44px" } },
-            }}
-          />
-          <div>
-            <strong>{name}</strong>
-            {email && email !== name && <p>{email}</p>}
-          </div>
-        </div>
-        <button
-          className="button button-secondary"
-          onClick={onSignOut}
-          disabled={signingOut}
-        >
-          {signingOut ? "Signing out…" : "Sign out"}
-        </button>
+        <AccountSummary state={state} />
+        <AccountMenu
+          key={user.id}
+          state={state}
+          links={{
+            profile: "/account?view=profile",
+            services: "/account",
+            signIn: "/account",
+            signUp: "/account/sign-up",
+          }}
+          onSignOut={onSignOut}
+          variant="compact"
+        />
       </div>
-      {signOutError && (
-        <p className="account-status-error" role="alert">
-          {signOutError}
-        </p>
-      )}
       <nav className="account-dashboard-tabs" aria-label="Account sections">
         <Link
           href="/account"
@@ -76,7 +72,7 @@ export function AccountDashboard({
       </nav>
       {profile ? (
         <section
-          className="account-profile"
+          className="account-profile iy-account-theme"
           aria-label="Shared account profile and security"
         >
           <p className="account-profile-note">
@@ -86,12 +82,9 @@ export function AccountDashboard({
             key={user.id}
             routing="hash"
             appearance={{
-              variables: {
-                colorPrimary: "#18181b",
-                fontFamily: "var(--font-sans), sans-serif",
-                borderRadius: "0",
-              },
+              ...accountTheme,
               elements: {
+                ...accountTheme.elements,
                 rootBox: { width: "100%", maxWidth: "none" },
                 cardBox: {
                   width: "100%",
