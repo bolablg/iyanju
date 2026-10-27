@@ -23,15 +23,8 @@ export async function AccountPage({
   );
   return (
     <>
-      <PageIntro
-        eyebrow="YOUR ACCOUNT"
-        title={signUp ? "Join iYANJU." : "Sign in to iYANJU."}
-      >
-        <p>
-          {signUp
-            ? "Create your account for participating iYANJU applications."
-            : "Use your iYANJU account to continue."}
-        </p>
+      <PageIntro eyebrow="YOUR ACCOUNT" title="Your iYANJU account.">
+        <p>Profile, security, and the services you use.</p>
       </PageIntro>
       <section className="container account-content">
         {config.enabled ? (
