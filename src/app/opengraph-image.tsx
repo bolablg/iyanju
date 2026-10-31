@@ -34,7 +34,7 @@ export default async function Image() {
         <img
           src={`data:image/svg+xml;base64,${wordmark.toString("base64")}`}
           alt={site.name}
-          width={191.43}
+          width={202.86}
           height={40}
         />
       </div>

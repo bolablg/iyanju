@@ -192,6 +192,15 @@ export const privacySections: LegalSection[] = [
               authorization. Clerk records when your shared account was created.
             </p>
             <p>
+              When you open Account, this website requests an owner-only service
+              activation summary from participating applications. It contains
+              service status and available first-use dates, not your tasks or
+              other application content. The summary is used to show your
+              services without keeping a separate activation database here.
+              Checking Account does not activate an application or grant access.
+              Unavailable checks and unknown historical dates are shown as such.
+            </p>
+            <p>
               Each participating application manages its own onboarding,
               memberships, permissions, and records. An iYANJU account does not
               automatically grant access to another person’s workspace. Removing

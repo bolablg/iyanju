@@ -1392,3 +1392,207 @@ main:focus {
     transition: none !important;
   }
 }
+
+/* The private account area uses the public brand without decorative shadows. */
+.account-dashboard {
+  width: 100%;
+  min-width: 0;
+}
+.account-dashboard-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+.account-person {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+.account-person > div {
+  min-width: 0;
+}
+.account-person strong {
+  display: block;
+  font-size: 18px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.account-person p {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.account-dashboard-tabs {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 28px;
+}
+.account-dashboard-tabs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+.account-dashboard-tabs a[aria-current="page"] {
+  text-decoration: underline;
+  text-underline-offset: 16px;
+  text-decoration-thickness: 2px;
+}
+.account-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.account-section-heading h2 {
+  font-size: 28px;
+}
+.account-service-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 16px;
+}
+.account-service-list > li {
+  display: grid;
+  grid-template-columns: 124px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+.account-service-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 68px;
+  padding: 10px;
+  background: var(--wash);
+}
+.account-service-mark[data-tone="violet"] {
+  background: #f1eafa;
+}
+.account-service-mark[data-tone="orange"] {
+  background: #fff0e7;
+}
+.account-service-mark[data-tone="mint"] {
+  background: #e5f5ec;
+}
+.account-service-mark > span {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.account-service-mark img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+.account-service-copy h3 {
+  font-size: 23px;
+  margin-bottom: 5px;
+}
+.account-service-copy p {
+  font-size: 13px;
+}
+.account-service-copy small {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.account-service-open {
+  white-space: nowrap;
+}
+.account-service-state {
+  padding: 28px;
+  background: var(--wash);
+  border: 1px solid var(--line);
+}
+.account-service-state h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.account-service-state .button {
+  margin-top: 18px;
+}
+.account-service-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 20px;
+  margin-top: 18px;
+  font-size: 13px;
+}
+.account-service-note button {
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+.account-profile {
+  width: 100%;
+  min-width: 0;
+}
+.account-profile-note {
+  margin-bottom: 22px;
+  font-size: 13px;
+}
+.account-status-error {
+  margin-bottom: 18px;
+  color: #942522;
+}
+@media (max-width: 700px) {
+  .account-service-list > li {
+    grid-template-columns: 100px minmax(0, 1fr);
+    padding: 20px;
+    gap: 16px;
+  }
+  .account-service-open {
+    grid-column: 2;
+    justify-self: start;
+  }
+  .account-section-heading {
+    align-items: start;
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+@media (max-width: 440px) {
+  .account-dashboard-head {
+    align-items: start;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .account-dashboard-head > .button {
+    align-self: flex-start;
+  }
+  .account-dashboard-tabs {
+    gap: 20px;
+  }
+  .account-service-list > li {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .account-service-mark {
+    width: 124px;
+  }
+  .account-service-open {
+    grid-column: 1;
+  }
+  .account-service-state {
+    padding: 22px;
+  }
+}

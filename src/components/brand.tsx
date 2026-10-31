@@ -3,21 +3,15 @@ import { site } from "@/content/site";
 
 export function Symbol({ className = "" }: { className?: string }) {
   return (
-    <svg
+    <Image
       className={className}
-      viewBox="0 0 16 16"
-      fill="none"
+      src="/brand/iyanju-symbol.svg"
+      alt=""
       aria-hidden="true"
-    >
-      <rect
-        x="1"
-        y="1"
-        width="14"
-        height="14"
-        fill="currentColor"
-        stroke="#18181b"
-      />
-    </svg>
+      width={64}
+      height={64}
+      unoptimized
+    />
   );
 }
 export function Wordmark() {
@@ -26,7 +20,7 @@ export function Wordmark() {
       <Image
         src="/brand/iyanju-wordmark.svg"
         alt={site.name}
-        width={134}
+        width={142}
         height={28}
         unoptimized
         loading="eager"
