@@ -9,7 +9,7 @@ export const site = {
     address: "C/SB Maison Balogoun J., Gbetagbo, Abomey-Calavi, BENIN",
     email: "bolajibalogoun@gmail.com",
   },
-  legalUpdatedDate: "October 26, 2026",
+  legalUpdatedDate: "October 31, 2026",
 } as const;
 
 export const emailLink = (subject?: string) =>

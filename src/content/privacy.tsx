@@ -37,8 +37,10 @@ export const privacySections: LegalSection[] = [
         {operatorClause}
         <p>
           This notice covers <strong>{site.url}</strong>, enquiries sent through
-          its contact address, and account features when available. It explains
-          what this website handles and how to contact me about your privacy.
+          its contact address, and shared account features when available. It
+          also explains how application data and optional external connections
+          relate to this website. Each application’s notice gives the details of
+          its own processing, storage, providers, and removal process.
         </p>
       </>
     ),
@@ -55,15 +57,44 @@ export const privacySections: LegalSection[] = [
           that application’s service, which has its own data and permissions.
         </p>
         <p>
-          <a href={kazi.privacyUrl}>Kazi’s privacy notice</a> explains its
-          accounts, workspace content, optional calendar and agent connections,
-          retention, and choices. An organization that controls a workspace may
-          have its own responsibilities for the information used there.
+          Applications handle information needed for the features you use. For
+          example:
+        </p>
+        <ul>
+          <li>
+            <strong>Kazi:</strong> workspace information such as tasks,
+            projects, comments, plans, preferences, and membership permissions.
+            Its optional Google availability connection uses calendar names and
+            identifiers and busy intervals to help avoid scheduling conflicts.
+            That availability connection does not request event descriptions,
+            attendees, or permission to write Google Calendar events. See{" "}
+            <a href={kazi.privacyUrl}>Kazi’s privacy notice</a>.
+          </li>
+          <li>
+            <strong>PlayKin:</strong> Google account and YouTube channel
+            identifiers, playlist and video metadata, and subscriptions for
+            library management. A secondary source account provides read-only
+            information for copying. The Google account linked to your iYANJU
+            identity is the main destination for authorized playlist changes and
+            subscription transfers. See{" "}
+            <a href="https://playkin.iyanju.com/privacy">
+              PlayKin’s privacy notice
+            </a>
+            .
+          </li>
+        </ul>
+        <p>
+          Connections also involve authorization credentials and connection
+          status, handled by the relevant application and its providers. An
+          organization that controls a workspace may have its own
+          responsibilities for the information used there.
         </p>
         <p>
           Shared sign-in does not by itself combine application databases, grant
           workspace access, share calendar information, or authorize
-          cross-application use of your content.
+          cross-application use of your content. Google sign-in supplies account
+          identity information; YouTube and calendar access require their own
+          feature-specific authorization.
         </p>
       </>
     ),
@@ -231,15 +262,103 @@ export const privacySections: LegalSection[] = [
         <p>
           This website was built with assistance from AI. It does not send your
           browsing activity or email content to an AI model through its
-          implemented features. An application that uses AI at runtime explains
-          that separately in its own information and privacy notice.
+          implemented features and has no built-in AI model that evaluates your
+          content. PlayKin’s YouTube features and Kazi’s calendar and planning
+          features do not call a built-in AI model. Software can still process
+          information to provide those features, such as calculating available
+          planning time. Optional external AI clients are a separate data path,
+          explained below. Other applications describe their own features and
+          data use in their notices.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: "mcp",
+    title: "8. Optional MCP clients and AI providers",
+    content: (
+      <>
+        <p>
+          Where an application such as Kazi supports the Model Context Protocol
+          (MCP), you can authorize an external client of your choice. That
+          client may be an AI assistant connected to a third-party model
+          provider. Connecting it is optional; visiting this website or creating
+          an iYANJU account does not by itself authorize an MCP client.
+        </p>
+        <p>
+          An authorized client can request information or perform actions within
+          its credential scopes and your application permissions. Depending on
+          that access, it may retrieve workspace content, create or edit work,
+          or receive calendar names and busy intervals. Read access can include
+          information from connected services; a read-only client can still
+          transmit what it receives to its AI provider. Permission to act does
+          not mean that you approve each individual action in the application.
+        </p>
+        <p>
+          Information returned to the client leaves the application and may be
+          processed or retained by that client, its AI provider, and any model
+          gateway or other provider it uses. Their terms, plan, settings, and
+          privacy practices determine that further processing, subject to
+          applicable law and source-service restrictions. iYANJU does not choose
+          a built-in AI provider for these connections or guarantee every
+          external provider’s retention or model-training settings.
+        </p>
+        <p>
+          Before connecting, review the client and provider, the data it may
+          receive, its permissions, retention, and model-training controls.
+          Grant only the access you need and have authority to share. In Kazi,
+          credentials can be revoked in Connections → MCP &amp; agents.
+          Revocation prevents future use of that credential; it does not
+          retrieve copies already received by a client, delete provider records,
+          or reverse completed actions. Contact the external provider about its
+          copies and your rights there.
+        </p>
+        <p>
+          User choice does not remove the operator’s responsibilities for the
+          application’s access controls, security, disclosures, and lawful
+          handling of information. The{" "}
+          <a href="/terms#mcp">
+            terms explain users’ connection responsibilities
+          </a>
+          .
+        </p>
+      </>
+    ),
+  },
+  {
+    id: "google-data",
+    title: "9. Google data and Limited Use",
+    content: (
+      <>
+        <p>
+          Use and transfer of information received from Google APIs is subject
+          to the{" "}
+          <a href="https://developers.google.com/terms/api-services-user-data-policy">
+            Google API Services User Data Policy
+          </a>
+          , including its Limited Use requirements, and the applicable{" "}
+          <a href="https://developers.google.com/workspace/workspace-api-user-data-developer-policy">
+            Google Workspace user data policy
+          </a>
+          . These restrictions also apply to data derived from Google
+          information, such as calendar availability returned to an MCP client.
+        </p>
+        <p>
+          Google information is for the authorized application features and
+          permitted transfers. It must not be sold, used for advertising, or
+          used to create, train, or improve general-purpose AI models. Choosing
+          an external client or consenting to a connection does not waive these
+          restrictions. Do not connect a client to Google-derived information
+          when its processing would violate them. A provider’s statement that
+          training is disabled does not by itself establish that every use or
+          transfer is permitted.
         </p>
       </>
     ),
   },
   {
     id: "retention",
-    title: "8. Retention and removal",
+    title: "10. Retention and removal",
     content: (
       <>
         <p>
@@ -262,7 +381,7 @@ export const privacySections: LegalSection[] = [
   },
   {
     id: "security-transfers",
-    title: "9. Security and international processing",
+    title: "11. Security and international processing",
     content: (
       <>
         <p>
@@ -284,7 +403,7 @@ export const privacySections: LegalSection[] = [
   },
   {
     id: "rights",
-    title: "10. Your privacy choices",
+    title: "12. Your privacy choices",
     content: (
       <>
         <p>
@@ -310,7 +429,7 @@ export const privacySections: LegalSection[] = [
   },
   {
     id: "children",
-    title: "11. Children",
+    title: "13. Children",
     content: (
       <p>
         This public website does not ask for a date of birth or identity
@@ -323,7 +442,7 @@ export const privacySections: LegalSection[] = [
   },
   {
     id: "changes",
-    title: "12. Changes and contact",
+    title: "14. Changes and contact",
     content: (
       <p>
         I may update this notice as the website and its practices change. The
